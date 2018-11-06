@@ -28,7 +28,7 @@ namespace CareerCloud.Pocos
 		public DateTime? CompletionDate { get; set; }
 
 		[Column("Completion_Percent")]
-		public byte? CompletionPercent { get; set; }
+		public Byte? CompletionPercent { get; set; }
 
 		[Column("Time_Stamp")]
 		public Byte[] TimeStamp { get; set; }

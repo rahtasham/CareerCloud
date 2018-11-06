@@ -32,6 +32,6 @@ namespace CareerCloud.Pocos
 		public string PostalCode { get; set; }
 
 		[Column("Time_Stamp")]
-		public string TimeStamp { get; set; }
+		public Byte[] TimeStamp { get; set; }
 	}
 }

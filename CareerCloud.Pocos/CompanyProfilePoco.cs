@@ -21,13 +21,13 @@ namespace CareerCloud.Pocos
 		public string CompanyWebsite { get; set; }
 
 		[Column("Contact_Phone")]
-		public string	ContactPhone { get; set; }
+		public string ContactPhone { get; set; }
 
 		[Column("Contact_Name")]
 		public string ContactName { get; set; }
 
 		[Column("Company_Logo")]
-		public string CompanyLogo { get; set; }
+		public Byte[] CompanyLogo { get; set; }
 
 		[Column("Time_Stamp")]
 		public byte[] TimeStamp { get; set; }
