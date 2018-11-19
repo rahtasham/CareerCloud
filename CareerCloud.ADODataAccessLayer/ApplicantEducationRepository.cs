@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CareerCloud.ADODataAccessLayer 
+namespace CareerCloud.ADODataAccessLayer
 {
 	public class ApplicantEducationRepository : BaseADO, IDataRepository<ApplicantEducationPoco>
 	{
@@ -20,7 +20,7 @@ namespace CareerCloud.ADODataAccessLayer
 				command.Connection = conn;
 
 				foreach (ApplicantEducationPoco poco in items)
-					{
+				{
 					command.CommandText = @"INSERT INTO [dbo].[Applicant_Educations]
 							([Id], [Applicant], [Major], [Certificate_Diploma], [Start_Date], [Completion_Date], 
 								[Completion_Percent], [Time_Stamp])
@@ -39,7 +39,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				}
 
-				
+
 			}
 		}
 
@@ -67,32 +67,32 @@ namespace CareerCloud.ADODataAccessLayer
 					poco.Applicant = reader.GetGuid(1);
 					poco.Major = reader.GetString(2);
 					poco.CertificateDiploma = reader.GetString(3);
-					if(!reader.IsDBNull(4))
-						{
-							poco.StartDate = reader.GetDateTime(4);
-						}
+					if (!reader.IsDBNull(4))
+					{
+						poco.StartDate = reader.GetDateTime(4);
+					}
 					else
-						{
-							poco.StartDate = null;
-						}
+					{
+						poco.StartDate = null;
+					}
 
 					if (!reader.IsDBNull(5))
-						{
-							poco.CompletionDate = reader.GetDateTime(5);
-						}
+					{
+						poco.CompletionDate = reader.GetDateTime(5);
+					}
 					else
-						{
-							poco.CompletionDate = null;
-						}
+					{
+						poco.CompletionDate = null;
+					}
 
 					if (!reader.IsDBNull(5))
-						{
-							poco.CompletionPercent = reader.GetByte(6);
-						}
+					{
+						poco.CompletionPercent = reader.GetByte(6);
+					}
 					else
-						{
-							poco.CompletionPercent = null;
-						}
+					{
+						poco.CompletionPercent = null;
+					}
 					poco.TimeStamp = (byte[])reader[7];
 
 					pocos[position] = poco;
@@ -151,4 +151,6 @@ namespace CareerCloud.ADODataAccessLayer
 				}
 			}
 		}
+	}
+}
 

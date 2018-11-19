@@ -112,7 +112,7 @@ namespace CareerCloud.ADODataAccessLayer
 							WHERE Id = @Id";
 
 					cmd.Parameters.AddWithValue("@Company", poco.Company);
-					Parameters.AddWithValue("@Country_Code", poco.CountryCode);
+					cmd.Parameters.AddWithValue("@Country_Code", poco.CountryCode);
 					cmd.Parameters.AddWithValue("@State_Province_Code", poco.Province);
 					cmd.Parameters.AddWithValue("@Street_Address", poco.Street);
 					cmd.Parameters.AddWithValue("@City_Town", poco.City);
