@@ -14,7 +14,22 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params SystemCountryCodePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (SystemCountryCodePoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[System_Country_Codes]
+							([Code],[Name])
+							Values
+							(@Code, @Name)";
+
+					command.Parameters.AddWithValue("@Code", poco.Code);
+					command.Parameters.AddWithValue("@Name", poco.Name);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -56,7 +71,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public SystemCountryCodePoco GetSingle(Expression<Func<SystemCountryCodePoco, bool>> where, params Expression<Func<SystemCountryCodePoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<SystemCountryCodePoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params SystemCountryCodePoco[] items)
@@ -66,7 +83,28 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params SystemCountryCodePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SystemCountryCodePoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE System_Country_Code
+						SET Name = @Name
+							WHERE Code = @Code";
+
+					
+					cmd.Parameters.AddWithValue("@Name", poco.Name);
+					cmd.Parameters.AddWithValue("@Code", poco.Code);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
 		}
 	}
 }

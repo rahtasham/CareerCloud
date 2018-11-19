@@ -14,7 +14,25 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params ApplicantJobApplicationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (ApplicantJobApplicationPoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Applicant_Job_Applications]
+							([Id], [Applicant], [Job], [Application_Date][Time_Stamp])
+							Values
+							(@Id, @Applicant, @Job, @Application_Date, @Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
+					command.Parameters.AddWithValue("@Job", poco.Job);
+					command.Parameters.AddWithValue("@Application_Date", poco.ApplicationDate);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -58,7 +76,8 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public ApplicantJobApplicationPoco GetSingle(Expression<Func<ApplicantJobApplicationPoco, bool>> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<ApplicantJobApplicationPoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
 		}
 
 		public void Remove(params ApplicantJobApplicationPoco[] items)
@@ -68,7 +87,31 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params ApplicantJobApplicationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (ApplicantJobApplicationPoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Applicant_Job_Applications
+						SET Applicant = @Applicant, 
+							Job = @Job,
+							Application_Date = @Application_Date
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
+					cmd.Parameters.AddWithValue("@Job", poco.Job);
+					cmd.Parameters.AddWithValue("@Application_Date", poco.ApplicationDate);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
 		}
 	}
 }

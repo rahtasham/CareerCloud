@@ -29,6 +29,7 @@ namespace CareerCloud.ADODataAccessLayer
 								@Completion_Percent, @Time_Stamp)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
 					command.Parameters.AddWithValue("@Major", poco.Major);
 					command.Parameters.AddWithValue("@Certificate_Diploma", poco.CertificateDiploma);
 					command.Parameters.AddWithValue("@Start_Date", poco.StartDate);
@@ -108,7 +109,8 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public ApplicantEducationPoco GetSingle(Expression<Func<ApplicantEducationPoco, bool>> where, params Expression<Func<ApplicantEducationPoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<ApplicantEducationPoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
 		}
 
 		public void Remove(params ApplicantEducationPoco[] items)
@@ -118,7 +120,35 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params ApplicantEducationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (ApplicantEducationPoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Applicant_Educations
+						SET Applicant = @Applicant, 
+							Major = @Major,
+							Certificate_Diploma = @Certificate_Diploma,
+							Start_Date = @Start_Date,
+							Completion_Date = @Completion_Date,
+							Completion_Percent = @Completion_Percent
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
+					cmd.Parameters.AddWithValue("@Major", poco.Major);
+					cmd.Parameters.AddWithValue("@Certificate_Diploma", poco.CertificateDiploma);
+					cmd.Parameters.AddWithValue("@Start_Date", poco.StartDate);
+					cmd.Parameters.AddWithValue("@Completion_Date", poco.CompletionDate);
+					cmd.Parameters.AddWithValue("@Completion_Percent", poco.CompletionPercent);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
 		}
-	}
-}
+

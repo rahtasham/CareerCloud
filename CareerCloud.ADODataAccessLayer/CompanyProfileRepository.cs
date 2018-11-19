@@ -14,7 +14,29 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params CompanyProfilePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (CompanyProfilePoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Company_Profiles]
+							([Id],[Registration_Date],[Company_Website],[Contact_Phone],
+								[Contact_Name],[Company_Logo],  [Time_Stamp])
+							Values
+							(@Id, @Registration_Date, @Company_Website, @Contact_Phone, @Contact_Name, 
+							@Company_Logo, @Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Registration_Date", poco.RegistrationDate);
+					command.Parameters.AddWithValue("@Company_Website", poco.CompanyWebsite);
+					command.Parameters.AddWithValue("@Contact_Phone", poco.ContactPhone);
+					command.Parameters.AddWithValue("@Contact_Name", poco.ContactName);
+					command.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -60,7 +82,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public CompanyProfilePoco GetSingle(Expression<Func<CompanyProfilePoco, bool>> where, params Expression<Func<CompanyProfilePoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<CompanyProfilePoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params CompanyProfilePoco[] items)
@@ -70,7 +94,37 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params CompanyProfilePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyProfilePoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Company_Profiles
+						SET Registration_Date = @Registration_Date, 
+							Company_Website = @Company_Website,
+							Contact_Phone = @Contact_Phone,
+							Contact_Name = @Contact_Name,
+							Company_Logo = @Company_Logo
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Registration_Date", poco.RegistrationDate);
+					cmd.Parameters.AddWithValue("@Company_Website", poco.CompanyWebsite);
+					cmd.Parameters.AddWithValue("@Contact_Phone", poco.ContactPhone);
+					cmd.Parameters.AddWithValue("@Contact_Name", poco.ContactName);
+					cmd.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
+
+
 		}
 	}
 }

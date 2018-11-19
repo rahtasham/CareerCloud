@@ -14,7 +14,24 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params SecurityLoginsRolePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (SecurityLoginsRolePoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Security_Logins_Roles]
+							([Id],[Login],[Role], [Time_Stamp])
+							Values
+							(@Id, @Login, @Role, @Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Login", poco.Login);
+					command.Parameters.AddWithValue("@Role", poco.Role);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -57,7 +74,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public SecurityLoginsRolePoco GetSingle(Expression<Func<SecurityLoginsRolePoco, bool>> where, params Expression<Func<SecurityLoginsRolePoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<SecurityLoginsRolePoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params SecurityLoginsRolePoco[] items)
@@ -67,7 +86,35 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params SecurityLoginsRolePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SecurityLoginsRolePoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Security_Logins_Role
+						SET Login = @Login, 
+							Role = @Role,
+							Certificate_Diploma = @Certificate_Diploma,
+							Start_Date = @Start_Date,
+							Completion_Date = @Completion_Date,
+							Completion_Percent = @Completion_Percent
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Login", poco.Login);
+					cmd.Parameters.AddWithValue("@Role", poco.Role);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
+
+
 		}
 	}
 }

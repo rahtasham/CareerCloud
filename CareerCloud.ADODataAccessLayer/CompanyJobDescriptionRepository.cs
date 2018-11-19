@@ -14,7 +14,25 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params CompanyJobDescriptionPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (CompanyJobDescriptionPoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Company_Jobs_Descriptions]
+							([Id],[Job],[Job_Name],[Job_Descriptions], [Time_Stamp])
+							Values
+							(@Id, @Job, @Job_Name, @Job_Descriptions, @Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Job", poco.Job);
+					command.Parameters.AddWithValue("@Job_Name", poco.JobName);
+					command.Parameters.AddWithValue("@Job_Descriptions", poco.JobDescriptions);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -58,7 +76,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public CompanyJobDescriptionPoco GetSingle(Expression<Func<CompanyJobDescriptionPoco, bool>> where, params Expression<Func<CompanyJobDescriptionPoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<CompanyJobDescriptionPoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params CompanyJobDescriptionPoco[] items)
@@ -68,7 +88,32 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params CompanyJobDescriptionPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyJobDescriptionPoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Company_Job_Descriptions
+						SET Job = @Job, 
+							Job_Name = @Job_Name,
+							Job_Descriptions = @Job_Descriptions
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Job", poco.Job);
+					cmd.Parameters.AddWithValue("@Job_Name", poco.JobName);
+					cmd.Parameters.AddWithValue("@Job_Descriptions", poco.JobDescriptions);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
+
 		}
 	}
 }

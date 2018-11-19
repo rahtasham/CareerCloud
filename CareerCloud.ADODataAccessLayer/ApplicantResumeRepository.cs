@@ -14,7 +14,26 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params ApplicantResumePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (ApplicantResumePoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Applicant_Resumes]
+							([Id], [Applicant],[Resume], [Last_Updated] )
+							Values
+							(@Id, @Applicant, @Resume, @Last_Updated)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
+					command.Parameters.AddWithValue("@Resume", poco.Resume);
+					command.Parameters.AddWithValue("@Last_Updated", poco.LastUpdated);
+					
+				}
+			}
+
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -65,7 +84,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public ApplicantResumePoco GetSingle(Expression<Func<ApplicantResumePoco, bool>> where, params Expression<Func<ApplicantResumePoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<ApplicantResumePoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params ApplicantResumePoco[] items)
@@ -75,7 +96,31 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params ApplicantResumePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (ApplicantResumePoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Applicant_Resumes
+						SET Applicant = @Applicant, 
+							Resume = @Resume,
+							Last_Updated = @Last_Updated
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
+					cmd.Parameters.AddWithValue("@Resume", poco.Resume);
+					cmd.Parameters.AddWithValue("@Last_Updated", poco.LastUpdated);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
 		}
 	}
 }

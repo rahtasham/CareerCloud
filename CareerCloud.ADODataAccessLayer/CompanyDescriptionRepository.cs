@@ -14,7 +14,29 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params CompanyDescriptionPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (CompanyDescriptionPoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Company_Descriptions]
+							([Id], [Company], [LanguageID], [Company_Name], [Company_Description],
+								[Time_Stamp])
+							Values
+							(@Id, @Company, @Major, @LanguageID, @Company_Name, @Company_Description, 
+								@Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Company", poco.Company);
+					command.Parameters.AddWithValue("@LanguageID", poco.LanguageId);
+					command.Parameters.AddWithValue("@Company_Name", poco.CompanyName);
+					command.Parameters.AddWithValue("@Company_Description", poco.CompanyDescription);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+				}	
+			}
+
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -59,7 +81,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public CompanyDescriptionPoco GetSingle(Expression<Func<CompanyDescriptionPoco, bool>> where, params Expression<Func<CompanyDescriptionPoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<CompanyDescriptionPoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params CompanyDescriptionPoco[] items)
@@ -69,7 +93,34 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params CompanyDescriptionPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyDescriptionPoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Company_Descriptions
+						SET Company = @Company, 
+							LanguageID = @LanguageID,
+							Company_Name = @Company_Name,
+							Company_Description = @Company_Description
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Company", poco.Company);
+					cmd.Parameters.AddWithValue("@LanguageID", poco.LanguageId);
+					cmd.Parameters.AddWithValue("@Company_Name", poco.CompanyName);
+					cmd.Parameters.AddWithValue("@Company_Description", poco.CompanyDescription);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
+
 		}
 	}
 }

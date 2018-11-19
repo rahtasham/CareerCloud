@@ -14,7 +14,27 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params CompanyJobEducationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (CompanyJobEducationPoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[Company_Job_Educations]
+							([Id], [Job], [Major], [Importance], [Time_Stamp])
+							Values
+							(@Id, @Job, @Major, @Importance, @Time_Stamp)";
+
+					command.Parameters.AddWithValue("@Id", poco.Id);
+					command.Parameters.AddWithValue("@Job", poco.Job);
+					command.Parameters.AddWithValue("@Major", poco.Major);
+					command.Parameters.AddWithValue("@Importance", poco.Importance);
+					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+
+				}
+			}
+
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -58,7 +78,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public CompanyJobEducationPoco GetSingle(Expression<Func<CompanyJobEducationPoco, bool>> where, params Expression<Func<CompanyJobEducationPoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<CompanyJobEducationPoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params CompanyJobEducationPoco[] items)
@@ -68,7 +90,31 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params CompanyJobEducationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyJobEducationPoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE Company_Job_Educations
+						SET Job = @Job, 
+							Major = @Major,
+							Importance = @Importance
+							WHERE Id = @Id";
+
+					cmd.Parameters.AddWithValue("@Job", poco.Job);
+					cmd.Parameters.AddWithValue("@Major", poco.Major);
+					cmd.Parameters.AddWithValue("@Importance", poco.Importance);
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
 		}
 	}
 }

@@ -14,7 +14,23 @@ namespace CareerCloud.ADODataAccessLayer
 	{
 		public void Add(params SystemLanguageCodePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand command = new SqlCommand();
+				command.Connection = conn;
+
+				foreach (SystemLanguageCodePoco poco in items)
+				{
+					command.CommandText = @"INSERT INTO [dbo].[System_Country_Codes]
+							([LanguageID],[Name],[Native_Name])
+							Values
+							(@LanguageID, @Name, @Native_Name)";
+
+					command.Parameters.AddWithValue("@LanguageID", poco.LanguageID);
+					command.Parameters.AddWithValue("@Name", poco.Name);
+					command.Parameters.AddWithValue("@Native_Name", poco.NativeName);
+				}
+			}
 		}
 
 		public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -56,7 +72,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public SystemLanguageCodePoco GetSingle(Expression<Func<SystemLanguageCodePoco, bool>> where, params Expression<Func<SystemLanguageCodePoco, object>>[] navigationProperties)
 		{
-			throw new NotImplementedException();
+			IQueryable<SystemLanguageCodePoco> pocos = GetAll().AsQueryable();
+			return pocos.Where(where).FirstOrDefault();
+
 		}
 
 		public void Remove(params SystemLanguageCodePoco[] items)
@@ -66,7 +84,30 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Update(params SystemLanguageCodePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SystemLanguageCodePoco poco in items)
+				{
+					cmd.CommandText = @"UPDATE System_Language_Code
+						SET Name = @Name, 
+							Native_Name = @Native_Name
+							WHERE LanguageID = @LanguageID";
+
+					cmd.Parameters.AddWithValue("@Name", poco.Name);
+					cmd.Parameters.AddWithValue("@Native_Name", poco.NativeName);
+					cmd.Parameters.AddWithValue("@LanguageID", poco.LanguageID);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+
+				}
+			}
+
 		}
 	}
 }
+					
