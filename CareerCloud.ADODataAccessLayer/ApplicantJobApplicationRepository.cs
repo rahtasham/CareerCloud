@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CareerCloud.ADODataAccessLayer
 {
-	public class ApplicantJobApplicationsRepository : BaseADO, IDataRepository<ApplicantJobApplicationPoco>
+	public class ApplicantJobApplicationRepository : BaseADO, IDataRepository<ApplicantJobApplicationPoco>
 	{
 		public void Add(params ApplicantJobApplicationPoco[] items)
 		{
