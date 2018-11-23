@@ -21,15 +21,19 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (SystemLanguageCodePoco poco in items)
 				{
-					command.CommandText = @"INSERT INTO [dbo].[System_Country_Codes]
+					command.CommandText = @"INSERT INTO [dbo].[System_Language_Codes]
 							([LanguageID],[Name],[Native_Name])
-							Values
+							 Values
 							(@LanguageID, @Name, @Native_Name)";
 
 					command.Parameters.AddWithValue("@LanguageID", poco.LanguageID);
 					command.Parameters.AddWithValue("@Name", poco.Name);
 					command.Parameters.AddWithValue("@Native_Name", poco.NativeName);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -44,6 +48,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from System_Language_Codes", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -60,8 +66,9 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -79,7 +86,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SystemLanguageCodePoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SystemLanguageCodePoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[System_Language_Codes] where LanguageId = @LanguageID";
+					cmd.Parameters.AddWithValue("@LanguageID", poco.LanguageID);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params SystemLanguageCodePoco[] items)
@@ -91,7 +116,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (SystemLanguageCodePoco poco in items)
 				{
-					cmd.CommandText = @"UPDATE System_Language_Code
+					cmd.CommandText = @"UPDATE [dbo].[System_Language_Codes]
 						SET Name = @Name, 
 							Native_Name = @Native_Name
 							WHERE LanguageID = @LanguageID";

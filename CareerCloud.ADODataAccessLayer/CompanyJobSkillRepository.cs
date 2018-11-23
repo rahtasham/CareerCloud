@@ -22,17 +22,21 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (CompanyJobSkillPoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Job_Skills]
-							([Id], [Job], [Skill], [Skill_Level], [Importance], [Time_Stamp])						[Time_Stamp])
+							([Id], [Job], [Skill], [Skill_Level], [Importance])
 							Values
-							(@Id, @Job, @Skill, @Skill_Level, @Importance, @Time_Stamp)";
+							(@Id, @Job, @Skill, @Skill_Level, @Importance)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Job", poco.Job);
 					command.Parameters.AddWithValue("@Skill", poco.Skill);
 					command.Parameters.AddWithValue("@Skill_Level", poco.SkillLevel);
 					command.Parameters.AddWithValue("@Importance", poco.Importance);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
+
 			}
 
 		}
@@ -44,10 +48,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<CompanyJobSkillPoco> GetAll(params Expression<Func<CompanyJobSkillPoco, object>>[] navigationProperties)
 		{
-			CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[500];
+			CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[5001];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Company_Job_Skills", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -67,8 +73,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -86,7 +94,21 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params CompanyJobSkillPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyJobSkillPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Company_Job_Skills] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
 		}
 
 		public void Update(params CompanyJobSkillPoco[] items)

@@ -22,19 +22,20 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (CompanyDescriptionPoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Descriptions]
-							([Id], [Company], [LanguageID], [Company_Name], [Company_Description],
-								[Time_Stamp])
+							([Id], [Company], [LanguageID], [Company_Name], [Company_Description])
 							Values
-							(@Id, @Company, @Major, @LanguageID, @Company_Name, @Company_Description, 
-								@Time_Stamp)";
+							(@Id, @Company,@LanguageID, @Company_Name, @Company_Description)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Company", poco.Company);
 					command.Parameters.AddWithValue("@LanguageID", poco.LanguageId);
 					command.Parameters.AddWithValue("@Company_Name", poco.CompanyName);
 					command.Parameters.AddWithValue("@Company_Description", poco.CompanyDescription);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
-				}	
+				}
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
+
 			}
 
 		}
@@ -46,10 +47,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<CompanyDescriptionPoco> GetAll(params Expression<Func<CompanyDescriptionPoco, object>>[] navigationProperties)
 		{
-			CompanyDescriptionPoco[] pocos = new CompanyDescriptionPoco[500];
+			CompanyDescriptionPoco[] pocos = new CompanyDescriptionPoco[601];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Company_Descriptions", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -69,8 +72,9 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 

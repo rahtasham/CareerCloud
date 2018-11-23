@@ -29,6 +29,10 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Code", poco.Code);
 					command.Parameters.AddWithValue("@Name", poco.Name);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -43,6 +47,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from System_Country_Codes", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -59,8 +65,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -78,7 +86,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SystemCountryCodePoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SystemCountryCodePoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[System_Country_Codes] where code = @Code";
+					cmd.Parameters.AddWithValue("@Code", poco.Code);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params SystemCountryCodePoco[] items)
@@ -90,7 +116,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (SystemCountryCodePoco poco in items)
 				{
-					cmd.CommandText = @"UPDATE System_Country_Code
+					cmd.CommandText = @"UPDATE System_Country_Codes
 						SET Name = @Name
 							WHERE Code = @Code";
 

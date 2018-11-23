@@ -21,13 +21,13 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (ApplicantWorkHistoryPoco poco in items)
 				{
-					command.CommandText = @"INSERT INTO [dbo].[Applicant_Educations]
+					command.CommandText = @"INSERT INTO [dbo].[Applicant_Work_History]
 							([Id], [Applicant], [Company_Name],[Country_Code],[Location],[Job_Title],
 								[Job_Description],[Start_Month],[Start_Year],[End_Month],
-								[End_Year],[Time_Stamp] )
+								[End_Year])
 							Values
-							(@Id, @Applicant, @Major, @Certificate_Diploma, @Start_Date, @Completion_Date, 
-								@Completion_Percent, @Time_Stamp)";
+							(@Id, @Applicant, @Company_Name, @Country_Code, @Location, @Job_Title, @Job_Description, @Start_Month, @Start_Year, @End_Month,
+								@End_Year)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
@@ -40,8 +40,11 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Start_Year", poco.StartYear);
 					command.Parameters.AddWithValue("@End_Month", poco.EndMonth);
 					command.Parameters.AddWithValue("@End_Year", poco.EndYear);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+					
 				}
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 
 		}
@@ -57,6 +60,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from [dbo].[Applicant_Work_History]", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -82,8 +87,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -128,13 +135,13 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (ApplicantWorkHistoryPoco poco in items)
 				{
-					cmd.CommandText = @"UPDATE Applicant_Educations
+					cmd.CommandText = @"UPDATE [dbo].[Applicant_Work_History]
 						SET Applicant = @Applicant, 
 							Company_Name = @Company_Name,
 							Country_Code = @Country_Code,
 							Location = @Location,
 							Job_Title = @Job_Title,
-							Job_Description = @Job_Description
+							Job_Description = @Job_Description,
 							Start_Month = @Start_Month,
 							Start_Year = @Start_Year,
 							End_Month = @End_Month,
@@ -159,16 +166,6 @@ namespace CareerCloud.ADODataAccessLayer
 
 				}
 			}
-
-
-
-
-
-
-
-
-
-
 
 
 		}

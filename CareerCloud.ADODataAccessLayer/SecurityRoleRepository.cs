@@ -30,6 +30,10 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Role", poco.Role);
 					command.Parameters.AddWithValue("@Is_Inactive", poco.IsInactive);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -44,6 +48,7 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Security_Roles", conn);
+				conn.Open();
 
 				int position = 0;
 
@@ -61,8 +66,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -80,7 +87,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SecurityRolePoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SecurityRolePoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Security_Roles] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params SecurityRolePoco[] items)

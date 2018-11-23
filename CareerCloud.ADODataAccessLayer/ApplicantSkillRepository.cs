@@ -23,10 +23,10 @@ namespace CareerCloud.ADODataAccessLayer
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Applicant_Skills]
 							([Id], [Applicant], [Skill], [Skill_Level], [Start_Month], [Start_Year], 
-								[End_Month], [End_Year], [Time_Stamp])
+								[End_Month], [End_Year])
 							Values
 							(@Id, @Applicant, @Skill, @Skill_Level, @Start_Month, @Start_Year, 
-								@End_Month, @End_Year, @Time_Stamp)";
+								@End_Month, @End_Year)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
@@ -36,8 +36,12 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Start_Year", poco.StartYear);
 					command.Parameters.AddWithValue("@End_Month", poco.EndMonth);
 					command.Parameters.AddWithValue("@End_Year", poco.EndYear);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
+
 			}
 
 		}
@@ -53,6 +57,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from [dbo].[Applicant_Skills]", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -75,8 +81,9 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 		}
 
 		public IList<ApplicantSkillPoco> GetList(Expression<Func<ApplicantSkillPoco, bool>> where, params Expression<Func<ApplicantSkillPoco, object>>[] navigationProperties)
@@ -126,7 +133,7 @@ namespace CareerCloud.ADODataAccessLayer
 							Skill_Level = @Skill_Level,
 							Start_Month = @Start_Month,
 							Start_Year = @Start_Year,
-							End_Month = @End_Month
+							End_Month = @End_Month,
 							End_Year = @End_Year
 							WHERE Id = @Id";
 

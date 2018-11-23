@@ -22,17 +22,19 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (CompanyJobEducationPoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Job_Educations]
-							([Id], [Job], [Major], [Importance], [Time_Stamp])
+							([Id], [Job], [Major], [Importance])
 							Values
-							(@Id, @Job, @Major, @Importance, @Time_Stamp)";
+							(@Id, @Job, @Major, @Importance)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Job", poco.Job);
 					command.Parameters.AddWithValue("@Major", poco.Major);
 					command.Parameters.AddWithValue("@Importance", poco.Importance);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
-
+					
 				}
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 
 		}
@@ -44,10 +46,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<CompanyJobEducationPoco> GetAll(params Expression<Func<CompanyJobEducationPoco, object>>[] navigationProperties)
 		{
-			CompanyJobEducationPoco[] pocos = new CompanyJobEducationPoco[500];
+			CompanyJobEducationPoco[] pocos = new CompanyJobEducationPoco[1001];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Company_Job_Educations", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -66,8 +70,9 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 

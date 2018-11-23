@@ -24,12 +24,11 @@ namespace CareerCloud.ADODataAccessLayer
 					command.CommandText = @"INSERT INTO [dbo].[Security_Logins]
 							([Id],[Login],[Password],[Created_Date],[Password_Update_Date],
 							[Agreement_Accepted_Date],[Is_Locked],[Is_Inactive],[Email_Address],
-							[Phone_Number],[Full_Name],[Force_Change_Password],[Prefferred_Language],
-							[Time_Stamp])
+							[Phone_Number],[Full_Name],[Force_Change_Password],[Prefferred_Language])							
 							Values
 							(@Id, @Login, @Password, @Created_Date, @Password_Update_Date, @Agreement_Accepted_Date, 
 								@Is_Locked,@Is_Inactive, @Email_Address, @Phone_Number,	@Full_Name,
-								@Force_Change_Password, @Prefferred_Language, @Time_Stamp)";
+								@Force_Change_Password, @Prefferred_Language)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Login", poco.Login);
@@ -44,8 +43,12 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Full_Name", poco.FullName);
 					command.Parameters.AddWithValue("@Force_Change_Password", poco.ForceChangePassword);
 					command.Parameters.AddWithValue("@Prefferred_Language", poco.PrefferredLanguage);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+					
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 
 		}
@@ -61,6 +64,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Security_Logins", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -96,17 +101,39 @@ namespace CareerCloud.ADODataAccessLayer
 					poco.IsLocked = reader.GetBoolean(6);
 					poco.IsInactive = reader.GetBoolean(7);
 					poco.EmailAddress = reader.GetString(8);
-					poco.PhoneNumber =reader.GetString(9);
+
+					if (!reader.IsDBNull(9))
+					{
+						poco.PhoneNumber = reader.GetString(9);
+					}
+					else
+					{
+						poco.PhoneNumber = null;
+					}
+
+
 					poco.FullName = reader.GetString(10);
 					poco.ForceChangePassword = reader.GetBoolean(11);
-					poco.PrefferredLanguage = reader.GetString(12);
+
+					if (!reader.IsDBNull(12))
+					{
+						poco.PrefferredLanguage = reader.GetString(12);
+					}
+					else
+					{
+						poco.PrefferredLanguage = null;
+					}
+
+
 					poco.TimeStamp = (byte[])reader[13];
 
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -124,7 +151,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SecurityLoginPoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SecurityLoginPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Security_Logins] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params SecurityLoginPoco[] items)

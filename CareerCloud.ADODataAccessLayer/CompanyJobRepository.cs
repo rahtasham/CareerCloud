@@ -22,20 +22,20 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (CompanyJobPoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Jobs]
-							([Id], [Company], [Profile_Created], [Is_Inactive],[Is_Company_Hidden],
-								[Time_Stamp])
+							([Id], [Company], [Profile_Created], [Is_Inactive],[Is_Company_Hidden])
 							Values
-							(@Id, @Company, @Major, @Profile_Created, @Is_Inactive, @Is_Company_Hidden, 
-								@Completion_Percent, @Time_Stamp)";
+							(@Id, @Company, @Profile_Created, @Is_Inactive, @Is_Company_Hidden)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Company", poco.Company);
 					command.Parameters.AddWithValue("@Profile_Created", poco.ProfileCreated);
 					command.Parameters.AddWithValue("@Is_Inactive", poco.IsInactive);
 					command.Parameters.AddWithValue("@Is_Company_Hidden", poco.IsCompanyHidden);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
-
+				
 				}
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}	
 
@@ -46,10 +46,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<CompanyJobPoco> GetAll(params Expression<Func<CompanyJobPoco, object>>[] navigationProperties)
 		{
-			CompanyJobPoco[] pocos = new CompanyJobPoco[500];
+			CompanyJobPoco[] pocos = new CompanyJobPoco[1001];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Company_Jobs", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -64,13 +66,14 @@ namespace CareerCloud.ADODataAccessLayer
 					poco.ProfileCreated = reader.GetDateTime(2);
 					poco.IsInactive = reader.GetBoolean(3);
 					poco.IsCompanyHidden = reader.GetBoolean(4);
-					poco.TimeStamp = (byte[])reader[7];
+					poco.TimeStamp = (byte[])reader[5];
 
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 

@@ -32,6 +32,10 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Last_Updated", poco.LastUpdated);
 					
 				}
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
+
 			}
 
 		}
@@ -47,6 +51,7 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Applicant_Resumes", conn);
+				conn.Open();
 
 				int position = 0;
 
@@ -68,13 +73,14 @@ namespace CareerCloud.ADODataAccessLayer
 					{
 						poco.LastUpdated = null;
 					}
-					poco.LastUpdated = reader.GetDateTime(3);
+					
 
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 		}
 
 		public IList<ApplicantResumePoco> GetList(Expression<Func<ApplicantResumePoco, bool>> where, params Expression<Func<ApplicantResumePoco, object>>[] navigationProperties)

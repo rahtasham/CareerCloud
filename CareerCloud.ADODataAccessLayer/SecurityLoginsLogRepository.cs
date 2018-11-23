@@ -24,7 +24,7 @@ namespace CareerCloud.ADODataAccessLayer
 					command.CommandText = @"INSERT INTO [dbo].[Security_Logins_Log]
 							([Id],[Login],[Source_IP],[Logon_Date],[Is_Succesful])
 							Values
-							(@Id, @Login, @Source_IP, @Logon_Date, @Is_Succesful,)";
+							(@Id, @Login, @Source_IP, @Logon_Date, @Is_Succesful)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Login", poco.Login);
@@ -32,7 +32,11 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Logon_Date", poco.LogonDate);
 					command.Parameters.AddWithValue("@Is_Succesful", poco.IsSuccesful);
 				}
-				
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
+
 			}
 
 		}
@@ -44,11 +48,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<SecurityLoginsLogPoco> GetAll(params Expression<Func<SecurityLoginsLogPoco, object>>[] navigationProperties)
 		{
-			SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[500];
+			SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1723];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Security_Logins_Log", conn);
 
+				conn.Open();
 				int position = 0;
 
 				SqlDataReader reader = command.ExecuteReader();
@@ -66,8 +71,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -85,10 +92,27 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SecurityLoginsLogPoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SecurityLoginsLogPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Security_Logins_Log] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
 		}
 
-		public void Update(params SecurityLoginsLogPoco[] items)
+
+			public void Update(params SecurityLoginsLogPoco[] items)
 		{
 			using (SqlConnection conn = new SqlConnection(connString))
 			{

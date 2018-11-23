@@ -22,16 +22,19 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (CompanyJobDescriptionPoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Jobs_Descriptions]
-							([Id],[Job],[Job_Name],[Job_Descriptions], [Time_Stamp])
+							([Id],[Job],[Job_Name],[Job_Descriptions])
 							Values
-							(@Id, @Job, @Job_Name, @Job_Descriptions, @Time_Stamp)";
+							(@Id, @Job, @Job_Name, @Job_Descriptions)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Job", poco.Job);
 					command.Parameters.AddWithValue("@Job_Name", poco.JobName);
 					command.Parameters.AddWithValue("@Job_Descriptions", poco.JobDescriptions);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -42,10 +45,12 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<CompanyJobDescriptionPoco> GetAll(params Expression<Func<CompanyJobDescriptionPoco, object>>[] navigationProperties)
 		{
-			CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[500];
+			CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[1001];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
-				SqlCommand command = new SqlCommand("Select * from Applicant_Educations", conn);
+				SqlCommand command = new SqlCommand("Select * from [dbo].[Company_Jobs_Descriptions]", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -59,13 +64,14 @@ namespace CareerCloud.ADODataAccessLayer
 					poco.Job = reader.GetGuid(1);
 					poco.JobName = reader.GetString(2);
 					poco.JobDescriptions = reader.GetString(3);
-					poco.TimeStamp = (byte[])reader[7];
+					poco.TimeStamp = (byte[])reader[4];
 
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -90,7 +96,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (CompanyJobDescriptionPoco poco in items)
 				{
-					cmd.CommandText = @"DELETE FROM Company_Jobs_Descriptions where Id = @ID";
+					cmd.CommandText = @"DELETE FROM [dbo].[Company_Jobs_Descriptions] where Id = @ID";
 					cmd.Parameters.AddWithValue("@Id", poco.Id);
 
 					conn.Open();
@@ -110,7 +116,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (CompanyJobDescriptionPoco poco in items)
 				{
-					cmd.CommandText = @"UPDATE Company_Job_Descriptions
+					cmd.CommandText = @"UPDATE [dbo].[Company_Jobs_Descriptions]
 						SET Job = @Job, 
 							Job_Name = @Job_Name,
 							Job_Descriptions = @Job_Descriptions

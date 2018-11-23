@@ -23,10 +23,10 @@ namespace CareerCloud.ADODataAccessLayer
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Company_Locations]
 							([Id], [Company], [Country_Code], [State_Province_Code],[Street_Address],
-							  [City_Town],[Zip_Postal_Code], [Time_Stamp])
+							  [City_Town],[Zip_Postal_Code])
 							Values
 							(@Id, @Company, @Country_Code, @State_Province_Code, @Street_Address, 
-								@City_Town, @Zip_Postal_Code, @Time_Stamp)";
+								@City_Town, @Zip_Postal_Code)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Company", poco.Company);
@@ -35,8 +35,12 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Street_Address", poco.Street);
 					command.Parameters.AddWithValue("@City_Town", poco.City);
 					command.Parameters.AddWithValue("@Zip_Postal_Code", poco.PostalCode);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+					
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -51,6 +55,7 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Company_Locations", conn);
+				conn.Open();
 
 				int position = 0;
 
@@ -64,15 +69,32 @@ namespace CareerCloud.ADODataAccessLayer
 					poco.Company = reader.GetGuid(1);
 					poco.CountryCode = reader.GetString(2);
 					poco.Province = reader.GetString(3);
-					poco.City = reader.GetString(4);
-					poco.PostalCode = reader.GetString(5);
-					poco.TimeStamp = (byte[])reader[6];
+					poco.Street = reader.GetString(4);
+					if (!reader.IsDBNull(5))
+					{
+						poco.City = reader.GetString(5);
+					}
+					else
+					{
+						poco.City = null;
+					}
+					if (!reader.IsDBNull(6))
+					{
+						poco.PostalCode = reader.GetString(6);
+					}
+					else
+					{
+						poco.PostalCode = null;
+					}
+					poco.TimeStamp = (byte[])reader[7];
 
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -90,7 +112,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params CompanyLocationPoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyLocationPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Company_Locations] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params CompanyLocationPoco[] items)

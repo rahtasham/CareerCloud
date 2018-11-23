@@ -22,15 +22,18 @@ namespace CareerCloud.ADODataAccessLayer
 				foreach (SecurityLoginsRolePoco poco in items)
 				{
 					command.CommandText = @"INSERT INTO [dbo].[Security_Logins_Roles]
-							([Id],[Login],[Role], [Time_Stamp])
+							([Id],[Login],[Role])
 							Values
-							(@Id, @Login, @Role, @Time_Stamp)";
+							(@Id, @Login, @Role)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Login", poco.Login);
 					command.Parameters.AddWithValue("@Role", poco.Role);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -44,7 +47,9 @@ namespace CareerCloud.ADODataAccessLayer
 			SecurityLoginsRolePoco[] pocos = new SecurityLoginsRolePoco[500];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
-				SqlCommand command = new SqlCommand("Select * from Applicant_Educations", conn);
+				SqlCommand command = new SqlCommand("Select * from [dbo].[Security_Logins_Roles]", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -62,8 +67,9 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 
 		}
 
@@ -81,7 +87,25 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params SecurityLoginsRolePoco[] items)
 		{
-			throw new NotImplementedException();
+
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (SecurityLoginsRolePoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [dbo].[Security_Logins_Roles] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
+
+
 		}
 
 		public void Update(params SecurityLoginsRolePoco[] items)
