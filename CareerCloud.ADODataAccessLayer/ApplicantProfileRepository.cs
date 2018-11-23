@@ -24,11 +24,10 @@ namespace CareerCloud.ADODataAccessLayer
 					command.CommandText = @"INSERT INTO [dbo].[Applicant_Profiles]
 							([Id], [Login], [Current_Salary],[Current_Rate] , [Currency],
 								[Country_Code], [State_Province_Code],[Street_Address],
-								[City_Town], [Zip_Postal_Code], [Time_Stamp])
+								[City_Town], [Zip_Postal_Code])
 							Values
 							(@Id, @Login, @Current_Salary, @Current_Rate, @Currency, @Country_Code, 
-								@State_Province_Code,@Street_Address,@Zip_Postal_Code,  @Time_Stamp, 
-								@Time_Stamp)";
+								@State_Province_Code,@Street_Address, @City_Town, @Zip_Postal_Code)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Login", poco.Login);
@@ -40,9 +39,11 @@ namespace CareerCloud.ADODataAccessLayer
 					command.Parameters.AddWithValue("@Street_Address", poco.Street);
 					command.Parameters.AddWithValue("@City_Town", poco.City);
 					command.Parameters.AddWithValue("@Zip_Postal_Code", poco.PostalCode);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
-
 				}
+
+				conn.Open();
+				int numOfRows = command.ExecuteNonQuery();
+				conn.Close();
 
 			}
 
@@ -59,6 +60,8 @@ namespace CareerCloud.ADODataAccessLayer
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Applicant_Profiles", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -83,8 +86,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+			conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 		}
 
 		public IList<ApplicantProfilePoco> GetList(Expression<Func<ApplicantProfilePoco, bool>> where, params Expression<Func<ApplicantProfilePoco, object>>[] navigationProperties)
@@ -101,7 +106,22 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params ApplicantProfilePoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (ApplicantProfilePoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM Applicant_Profiles where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
 		}
 
 		public void Update(params ApplicantProfilePoco[] items)

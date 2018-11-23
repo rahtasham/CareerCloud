@@ -83,7 +83,22 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params CompanyJobDescriptionPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (CompanyJobDescriptionPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM Company_Jobs_Descriptions where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
+
 		}
 
 		public void Update(params CompanyJobDescriptionPoco[] items)

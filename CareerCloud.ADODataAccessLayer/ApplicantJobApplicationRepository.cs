@@ -21,17 +21,20 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (ApplicantJobApplicationPoco poco in items)
 				{
-					command.CommandText = @"INSERT INTO [dbo].[Applicant_Job_Applications]
-							([Id], [Applicant], [Job], [Application_Date][Time_Stamp])
+					command.CommandText = @"INSERT INTO [Applicant_Job_Applications]
+							([Id], [Applicant], [Job], [Application_Date])
 							Values
-							(@Id, @Applicant, @Job, @Application_Date, @Time_Stamp)";
+							(@Id, @Applicant, @Job, @Application_Date)";
 
 					command.Parameters.AddWithValue("@Id", poco.Id);
 					command.Parameters.AddWithValue("@Applicant", poco.Applicant);
 					command.Parameters.AddWithValue("@Job", poco.Job);
 					command.Parameters.AddWithValue("@Application_Date", poco.ApplicationDate);
-					command.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
+					
 				}
+				conn.Open();
+				int rowEffected = command.ExecuteNonQuery();
+				conn.Close();
 			}
 		}
 
@@ -46,7 +49,9 @@ namespace CareerCloud.ADODataAccessLayer
 
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
-				SqlCommand command = new SqlCommand("Select * from [dbo].[Applicant_Job_Applications]", conn);
+				SqlCommand command = new SqlCommand("Select * from [Applicant_Job_Applications]", conn);
+
+				conn.Open();
 
 				int position = 0;
 
@@ -65,8 +70,10 @@ namespace CareerCloud.ADODataAccessLayer
 					pocos[position] = poco;
 					position++;
 				}
+
+				conn.Close();
 			}
-			return pocos.ToList();
+			return pocos.Where(a => a != null).ToList();
 		}
 
 		public IList<ApplicantJobApplicationPoco> GetList(Expression<Func<ApplicantJobApplicationPoco, bool>> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
@@ -82,7 +89,21 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public void Remove(params ApplicantJobApplicationPoco[] items)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection conn = new SqlConnection(connString))
+			{
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = conn;
+
+				foreach (ApplicantJobApplicationPoco poco in items)
+				{
+					cmd.CommandText = @"DELETE FROM [Applicant_Job_Applications] where Id = @ID";
+					cmd.Parameters.AddWithValue("@Id", poco.Id);
+
+					conn.Open();
+					int numOfRows = cmd.ExecuteNonQuery();
+					conn.Close();
+				}
+			}
 		}
 
 		public void Update(params ApplicantJobApplicationPoco[] items)
@@ -94,7 +115,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 				foreach (ApplicantJobApplicationPoco poco in items)
 				{
-					cmd.CommandText = @"UPDATE Applicant_Job_Applications
+					cmd.CommandText = @"UPDATE [Applicant_Job_Applications]
 						SET Applicant = @Applicant, 
 							Job = @Job,
 							Application_Date = @Application_Date
