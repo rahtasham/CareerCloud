@@ -32,7 +32,12 @@ namespace CareerCloud.BusinessLogicLayer
 
 			foreach (ApplicantEducationPoco item in pocos)
 			{
-				if(item.Major.Length < 3)
+				if (string.IsNullOrEmpty(item.Major))
+				{
+					exceptions.Add(new ValidationException(107, $"{item.Id} Cannot be empty or less than 3 characters"));
+				}
+
+				else if (item.Major.Length < 3)
 				{
 					exceptions.Add(new ValidationException(107, $"Major for {item.Id} cannot be empty or less than 3 characters"));
 				}
