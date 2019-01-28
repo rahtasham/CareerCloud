@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CareerCloud.EntityFrameworkDataAccess
 {
-	class EFGenericRepository<T> : IDataRepository<T> where T: class
+	public class EFGenericRepository<T> : IDataRepository<T> where T: class
 	{
 		private CareerCloudContext _context;
 
