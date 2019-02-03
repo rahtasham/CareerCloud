@@ -19,6 +19,12 @@ namespace CareerCloud.Pocos
 		[Column("Company_Name")]
 		public String CompanyName { get; set; }
 
+		[Column("Job_Description")]
+		public String JobDescription { get; set; }
+
+		[Column("Start_Month")]
+		public Int16 StartMonth { get; set; }
+
 		[Column("Country_Code")]
 		public String CountryCode { get; set; }
 
@@ -27,11 +33,6 @@ namespace CareerCloud.Pocos
 		[Column("Job_Title")]
 		public String JobTitle { get; set; }
 
-		[Column("Job_Description")]
-		public String JobDescription { get; set; }
-
-		[Column("Start_Month")]
-		public Int16 StartMonth { get; set; }
 
 		[Column("Start_Year")]
 		public Int32 StartYear { get; set; }
@@ -48,6 +49,7 @@ namespace CareerCloud.Pocos
 		public virtual SystemCountryCodePoco SystemCountryCode { get; set; }
 
 		public virtual ApplicantProfilePoco ApplicantProfile { get; set; }
-	}
+		
 
+	}
 }

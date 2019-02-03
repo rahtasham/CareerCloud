@@ -34,6 +34,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
 		public IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
 		{
+			
 			throw new NotImplementedException();
 		}
 

@@ -48,7 +48,7 @@ namespace CareerCloud.ADODataAccessLayer
 
 		public IList<SecurityLoginsLogPoco> GetAll(params Expression<Func<SecurityLoginsLogPoco, object>>[] navigationProperties)
 		{
-			SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1723];
+			SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[2000];
 			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				SqlCommand command = new SqlCommand("Select * from Security_Logins_Log", conn);
