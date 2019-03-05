@@ -64,7 +64,7 @@ namespace CareerCloud.WCF
 			_cdLogic.Add(item);
 		}
 
-		public void AddCompanyJobDescriptions(CompanyJobDescriptionPoco[] item)
+		public void AddCompanyJobDescription(CompanyJobDescriptionPoco[] item)
 		{
 			_cjdLogic.Add(item);
 		}
@@ -74,22 +74,22 @@ namespace CareerCloud.WCF
 			_cjeLogic.Add(item);
 		}
 
-		public void AddCompanyJobs(CompanyJobPoco[] item)
+		public void AddCompanyJob(CompanyJobPoco[] item)
 		{
 			_cjLogic.Add(item);
 		}
 
-		public void AddCompanyJobSkills(CompanyJobSkillPoco[] item)
+		public void AddCompanyJobSkill(CompanyJobSkillPoco[] item)
 		{
 			_cjsLogic.Add(item);
 		}
 
-		public void AddCompanyLocations(CompanyLocationPoco[] item)
+		public void AddCompanyLocation(CompanyLocationPoco[] item)
 		{
 			_clLogic.Add(item);
 		}
 
-		public void AddCompanyProfiles(CompanyProfilePoco[] item)
+		public void AddCompanyProfile(CompanyProfilePoco[] item)
 		{
 			_cpLogic.Add(item);
 		}
@@ -99,7 +99,7 @@ namespace CareerCloud.WCF
 			return _cdLogic.GetAll();
 		}
 
-		public List<CompanyJobDescriptionPoco> GetAllCompanyJobDescriptions()
+		public List<CompanyJobDescriptionPoco> GetAllCompanyJobDescription()
 		{
 			return _cjdLogic.GetAll();
 		}
@@ -109,59 +109,59 @@ namespace CareerCloud.WCF
 			return _cjeLogic.GetAll();
 		}
 
-		public List<CompanyJobPoco> GetAllCompanyJobs()
+		public List<CompanyJobPoco> GetAllCompanyJob()
 		{
 			return _cjLogic.GetAll();
 		}
 
-		public List<CompanyJobSkillPoco> GetAllCompanyJobSkills()
+		public List<CompanyJobSkillPoco> GetAllCompanyJobSkill()
 		{
 			return _cjsLogic.GetAll();
 		}
 
-		public List<CompanyLocationPoco> GetAllCompanyLocations()
+		public List<CompanyLocationPoco> GetAllCompanyLocation()
 		{
 			return _clLogic.GetAll();
 		}
 
-		public List<CompanyProfilePoco> GetAllCompanyProfiles()
+		public List<CompanyProfilePoco> GetAllCompanyProfile()
 		{
 			return _cpLogic.GetAll();
 		}
 
-		public CompanyDescriptionPoco GetSingleCompanyDescription(Guid Id)
+		public CompanyDescriptionPoco GetSingleCompanyDescription(string Id)
 		{
-			return _cdLogic.Get(Id);
+			return _cdLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyJobDescriptionPoco GetSingleCompanyJobDescriptions(Guid Id)
+		public CompanyJobDescriptionPoco GetSingleCompanyJobDescription(string Id)
 		{
-			return _cjdLogic.Get(Id);
+			return _cjdLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyJobEducationPoco GetSingleCompanyJobEducation(Guid Id)
+		public CompanyJobEducationPoco GetSingleCompanyJobEducation(string Id)
 		{
-			return _cjeLogic.Get(Id);
+			return _cjeLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyJobPoco GetSingleCompanyJobs(Guid Id)
+		public CompanyJobPoco GetSingleCompanyJob(string Id)
 		{
-			return _cjLogic.Get(Id);
+			return _cjLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyJobSkillPoco GetSingleCompanyJobSkills(Guid Id)
+		public CompanyJobSkillPoco GetSingleCompanyJobSkill(string Id)
 		{
-			return _cjsLogic.Get(Id);
+			return _cjsLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyLocationPoco GetSingleCompanyLocations(Guid Id)
+		public CompanyLocationPoco GetSingleCompanyLocation(string Id)
 		{
-			return _clLogic.Get(Id);
+			return _clLogic.Get(Guid.Parse(Id));
 		}
 
-		public CompanyProfilePoco GetSingleCompanyProfiles(Guid Id)
+		public CompanyProfilePoco GetSingleCompanyProfile(string Id)
 		{
-			return _cpLogic.Get(Id);
+			return _cpLogic.Get(Guid.Parse(Id));
 		}
 
 		public void RemoveCompanyDescription(CompanyDescriptionPoco[] item)
@@ -169,7 +169,7 @@ namespace CareerCloud.WCF
 			_cdLogic.Delete(item);
 		}
 
-		public void RemoveCompanyJobDescriptions(CompanyJobDescriptionPoco[] item)
+		public void RemoveCompanyJobDescription(CompanyJobDescriptionPoco[] item)
 		{
 			_cjdLogic.Delete(item);
 		}
@@ -179,22 +179,22 @@ namespace CareerCloud.WCF
 			_cjeLogic.Delete(item);
 		}
 
-		public void RemoveCompanyJobs(CompanyJobPoco[] item)
+		public void RemoveCompanyJob(CompanyJobPoco[] item)
 		{
 			_cjLogic.Delete(item);
 		}
 
-		public void RemoveCompanyJobSkills(CompanyJobSkillPoco[] item)
+		public void RemoveCompanyJobSkill(CompanyJobSkillPoco[] item)
 		{
 			_cjsLogic.Delete(item);
 		}
 
-		public void RemoveCompanyLocations(CompanyLocationPoco[] item)
+		public void RemoveCompanyLocation(CompanyLocationPoco[] item)
 		{
 			_clLogic.Delete(item);
 		}
 
-		public void RemoveCompanyProfiles(CompanyProfilePoco[] item)
+		public void RemoveCompanyProfile(CompanyProfilePoco[] item)
 		{
 			_cpLogic.Delete(item);
 		}
@@ -204,7 +204,7 @@ namespace CareerCloud.WCF
 			_cdLogic.Update(items);
 		}
 
-		public void UpdateCompanyJobDescriptions(CompanyJobDescriptionPoco[] items)
+		public void UpdateCompanyJobDescription(CompanyJobDescriptionPoco[] items)
 		{
 			_cjdLogic.Update(items);
 		}
@@ -214,24 +214,24 @@ namespace CareerCloud.WCF
 			_cjeLogic.Update(items);
 		}
 
-		public void UpdateCompanyJobs(CompanyJobPoco[] items)
+		public void UpdateCompanyJob(CompanyJobPoco[] items)
 		{
 			_cjLogic.Update(items);
 		}
 
-		public void UpdateCompanyJobSkills(CompanyJobSkillPoco[] items)
+		public void UpdateCompanyJobSkill(CompanyJobSkillPoco[] items)
 		{
 			_cjsLogic.Update(items);
 		}
 
-		public void UpdateCompanyLocations(CompanyLocationPoco[] items)
+		public void UpdateCompanyLocation(CompanyLocationPoco[] items)
 		{
 			_clLogic.Update(items);
 		}
 
-		public void UpdateCompanyProfiles(CompanyProfilePoco[] items)
+		public void UpdateCompanyProfile(CompanyProfilePoco[]item)
 		{
-			_cpLogic.Update(items);
+			_cpLogic.Update(item);
 		}
 	}
 }

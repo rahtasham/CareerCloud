@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="01d278af-0929-41a0-96f5-1f6661eeaf1d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8732/Design_Time_Addresses/CareerCloud.WCF/Security/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="22bfb842-f7a0-467d-9573-f37c7235b49d" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/CareerCloud.WCF/Security/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7017c7ed-565d-452d-986f-1bf3d340d08c" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/CareerCloud.WCF/Security/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="34bfa3b3-0f59-48dc-bcdc-bde2083a4450" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/CareerCloud.WCF/Security/mex" />
+    <MetadataFile FileName="CareerCloud.Pocos.xsd" MetadataType="Schema" ID="780f717e-19be-46fe-abd3-0a751ff920af" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/CareerCloud.WCF/Security/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

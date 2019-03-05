@@ -27,55 +27,57 @@ namespace CareerCloud.WCF
 			_slcLogic = new SystemLanguageCodeLogic(slcRepo);
 		}
 
-		public void AddSystemCountryCodes(SystemCountryCodePoco[] item)
+		public void AddSystemCountryCode(SystemCountryCodePoco[] item)
 		{
 			_sccLogic.Add(item);
 		}
 
-		public void AddSystemLanguageCodes(SystemLanguageCodePoco[] item)
+		public void AddSystemLanguageCode(SystemLanguageCodePoco[] item)
 		{
 			_slcLogic.Add(item);
 		}
 
-		public List<SystemCountryCodePoco> GetAllSystemCountryCodes()
+		public List<SystemCountryCodePoco> GetAllSystemCountryCode()
 		{
 			return _sccLogic.GetAll();
 		}
 
-		public List<SystemLanguageCodePoco> GetAllSystemLanguageCodes()
+		public List<SystemLanguageCodePoco> GetAllSystemLanguageCode()
 		{
 			return _slcLogic.GetAll();
 		}
 
-		public SystemCountryCodePoco GetSingleSystemCountryCodes(string Code)
+		public SystemCountryCodePoco GetSingleSystemCountryCode(string code)
 		{
-			return _sccLogic.Get(Code);
+			return _sccLogic.Get(code);
 		}
 
-		public SystemLanguageCodePoco GetSingleSystemLanguageCodes(string Code)
+		public SystemLanguageCodePoco GetSingleSystemLanguageCode(string code)
 		{
-			return _slcLogic.Get(Code);
+			return _slcLogic.Get(code);
 		}
 
-
-		public void RemoveSystemCountryCodes(SystemCountryCodePoco[] item)
+		public void RemoveSystemCountryCode(SystemCountryCodePoco[] item)
 		{
 			_sccLogic.Delete(item);
 		}
 
-		public void RemoveSystemLanguageCodes(SystemLanguageCodePoco[] item)
+		public void RemoveSystemLanguageCode(SystemLanguageCodePoco[] item)
 		{
 			_slcLogic.Delete(item);
 		}
 
-		public void UpdateSystemCountryCodes(SystemCountryCodePoco[] items)
+		public void UpdateSystemCountryCode(SystemCountryCodePoco[] item)
 		{
-			_sccLogic.Update(items);
+			_sccLogic.Update(item);
 		}
 
-		public void UpdateSytemLanguageCodes(SystemLanguageCodePoco[] items)
+		public void UpdateSystemLanguageCode(SystemLanguageCodePoco[] item)
 		{
-			_slcLogic.Update(items);
+			_slcLogic.Update(item);
 		}
 	}
 }
+
+		
+			

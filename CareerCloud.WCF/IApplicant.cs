@@ -17,7 +17,7 @@ namespace CareerCloud.WCF
 		[OperationContract]
 		List<ApplicantEducationPoco> GetAllApplicantEducation();
 		[OperationContract]
-		ApplicantEducationPoco GetSingleAppplicantEducation(Guid Id);
+		ApplicantEducationPoco GetSingleApplicantEducation(string Id);
 		[OperationContract]
 		void RemoveApplicantEducation(ApplicantEducationPoco[] items);
 		[OperationContract]
@@ -28,51 +28,51 @@ namespace CareerCloud.WCF
 		[OperationContract]
 		List<ApplicantJobApplicationPoco> GetAllApplicantJobApplication();
 		[OperationContract]
-		ApplicantJobApplicationPoco GetSingleApplicantJobApplication(Guid Id);
+		ApplicantJobApplicationPoco GetSingleApplicantJobApplication(string Id);
 		[OperationContract]
 		void RemoveApplicantJobApplication(ApplicantJobApplicationPoco[] item);
 		[OperationContract]
 		void UpdateApplicantJobApplication(ApplicantJobApplicationPoco[] items);
 
 		[OperationContract]
-		void AddApplicantProfiles(ApplicantProfilePoco[] item);
+		void AddApplicantProfile(ApplicantProfilePoco[] item);
 		[OperationContract]
-		List<ApplicantProfilePoco> GetAllApplicantProfiles();
+		List<ApplicantProfilePoco> GetAllApplicantProfile();
 		[OperationContract]
-		ApplicantProfilePoco GetSingleApplicantProfiles(Guid Id);
+		ApplicantProfilePoco GetSingleApplicantProfile(string Id);
 		[OperationContract]
-		void RemoveApplicantProfiles(ApplicantProfilePoco[] item);
+		void RemoveApplicantProfile(ApplicantProfilePoco[] item);
 		[OperationContract]
-		void UpdateApplicantProfiles(ApplicantProfilePoco[] items);
+		void UpdateApplicantProfile(ApplicantProfilePoco[] items);
 
 		[OperationContract]
 		void AddApplicantResume(ApplicantResumePoco[] item);
 		[OperationContract]
 		List<ApplicantResumePoco> GetAllApplicantResume();
 		[OperationContract]
-		ApplicantResumePoco GetSingleApplicantResume(Guid Id);
+		ApplicantResumePoco GetSingleApplicantResume(string Id);
 		[OperationContract]
 		void RemoveApplicantResume(ApplicantResumePoco[] item);
 		[OperationContract]
 		void UpdateApplicantResume(ApplicantResumePoco[] items);
 
 		[OperationContract]
-		void AddApplicantSkills(ApplicantSkillPoco[] item);
+		void AddApplicantSkill(ApplicantSkillPoco[] item);
 		[OperationContract]
-		List<ApplicantSkillPoco> GetAllApplicantSkills();
+		List<ApplicantSkillPoco> GetAllApplicantSkill();
 		[OperationContract]
-		ApplicantSkillPoco GetSingleApplicantSkills(Guid Id);
+		ApplicantSkillPoco GetSingleApplicantSkill(string Id);
 		[OperationContract]
-		void RemoveApplicantSkills(ApplicantSkillPoco[] item);
+		void RemoveApplicantSkill(ApplicantSkillPoco[] item);
 		[OperationContract]
-		void UpdateApplicantSkills(ApplicantSkillPoco[] items);
+		void UpdateApplicantSkill(ApplicantSkillPoco[] items);
 
 		[OperationContract]
 		void AddApplicantWorkHistory(ApplicantWorkHistoryPoco[] item);
 		[OperationContract]
 		List<ApplicantWorkHistoryPoco> GetAllApplicantWorkHistory();
 		[OperationContract]
-		ApplicantWorkHistoryPoco GetSingleApplicantWorkHistory(Guid Id);
+		ApplicantWorkHistoryPoco GetSingleApplicantWorkHistory(string Id);
 		[OperationContract]
 		void RemoveApplicantWorkHistory(ApplicantWorkHistoryPoco[] item);
 		[OperationContract]

@@ -10,7 +10,7 @@ using CareerCloud.Pocos;
 
 namespace CareerCloud.WCF
 {
-
+	
 	public class Applicant : IApplicant
 	{
 		private ApplicantEducationLogic _logic;
@@ -64,17 +64,16 @@ namespace CareerCloud.WCF
 			_jLogic.Add(item);
 		}
 
-		public void AddApplicantProfiles(ApplicantProfilePoco[] item)
+		public void AddApplicantProfile(ApplicantProfilePoco[] item)
 		{
 			_pLogic.Add(item);
 		}
-
 		public void AddApplicantResume(ApplicantResumePoco[] item)
 		{
 			_rLogic.Add(item);
 		}
 
-		public void AddApplicantSkills(ApplicantSkillPoco[] item)
+		public void AddApplicantSkill(ApplicantSkillPoco[] item)
 		{
 			_sLogic.Add(item);
 		}
@@ -94,7 +93,7 @@ namespace CareerCloud.WCF
 			return _jLogic.GetAll();
 		}
 
-		public List<ApplicantProfilePoco> GetAllApplicantProfiles()
+		public List<ApplicantProfilePoco> GetAllApplicantProfile()
 		{
 			return _pLogic.GetAll();
 		}
@@ -104,7 +103,7 @@ namespace CareerCloud.WCF
 			return _rLogic.GetAll();
 		}
 
-		public List<ApplicantSkillPoco> GetAllApplicantSkills()
+		public List<ApplicantSkillPoco> GetAllApplicantSkill()
 		{
 			return _sLogic.GetAll();
 		}
@@ -114,34 +113,34 @@ namespace CareerCloud.WCF
 			return _wLogic.GetAll();
 		}
 
-		public ApplicantJobApplicationPoco GetSingleApplicantJobApplication(Guid Id)
+		public ApplicantJobApplicationPoco GetSingleApplicantJobApplication(string Id)
 		{
-			return _jLogic.Get(Id);
+			return _jLogic.Get(Guid.Parse(Id));
 		}
 
-		public ApplicantProfilePoco GetSingleApplicantProfiles(Guid Id)
+		public ApplicantProfilePoco GetSingleApplicantProfile(string Id)
 		{
-			return _pLogic.Get(Id);
+			return _pLogic.Get(Guid.Parse(Id));
 		}
 
-		public ApplicantResumePoco GetSingleApplicantResume(Guid Id)
+		public ApplicantResumePoco GetSingleApplicantResume(string Id)
 		{
-			return _rLogic.Get(Id);
+			return _rLogic.Get(Guid.Parse(Id));
 		}
 
-		public ApplicantSkillPoco GetSingleApplicantSkills(Guid Id)
+		public ApplicantSkillPoco GetSingleApplicantSkill(string Id)
 		{
-			return _sLogic.Get(Id);
+			return _sLogic.Get(Guid.Parse(Id));
 		}
 
-		public ApplicantWorkHistoryPoco GetSingleApplicantWorkHistory(Guid Id)
+		public ApplicantWorkHistoryPoco GetSingleApplicantWorkHistory(string Id)
 		{
-			return _wLogic.Get(Id);
+			return _wLogic.Get(Guid.Parse(Id));
 		}
 
-		public ApplicantEducationPoco GetSingleAppplicantEducation(Guid Id)
+		public ApplicantEducationPoco GetSingleApplicantEducation(string Id)
 		{
-			return _logic.Get(Id);
+			return _logic.Get(Guid.Parse(Id));
 		}
 
 		public void RemoveApplicantEducation(ApplicantEducationPoco[] item)
@@ -154,7 +153,7 @@ namespace CareerCloud.WCF
 			_jLogic.Delete(item);
 		}
 
-		public void RemoveApplicantProfiles(ApplicantProfilePoco[] item)
+		public void RemoveApplicantProfile(ApplicantProfilePoco[] item)
 		{
 			_pLogic.Delete(item);
 		}
@@ -164,7 +163,7 @@ namespace CareerCloud.WCF
 			_rLogic.Delete(item);
 		}
 
-		public void RemoveApplicantSkills(ApplicantSkillPoco[] item)
+		public void RemoveApplicantSkill(ApplicantSkillPoco[] item)
 		{
 			_sLogic.Delete(item);
 		}
@@ -184,7 +183,7 @@ namespace CareerCloud.WCF
 			_jLogic.Update(items);
 		}
 
-		public void UpdateApplicantProfiles(ApplicantProfilePoco[] items)
+		public void UpdateApplicantProfile(ApplicantProfilePoco[] items)
 		{
 			_pLogic.Update(items);
 		}
@@ -194,7 +193,7 @@ namespace CareerCloud.WCF
 			_rLogic.Update(items);
 		}
 
-		public void UpdateApplicantSkills(ApplicantSkillPoco[] items)
+		public void UpdateApplicantSkill(ApplicantSkillPoco[] items)
 		{
 			_sLogic.Update(items);
 		}

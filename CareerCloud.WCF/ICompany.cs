@@ -1,10 +1,7 @@
 ﻿using CareerCloud.Pocos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CareerCloud.WCF
@@ -17,7 +14,7 @@ namespace CareerCloud.WCF
 		[OperationContract]
 		List<CompanyDescriptionPoco> GetAllCompanyDescription();
 		[OperationContract]
-		CompanyDescriptionPoco GetSingleCompanyDescription(Guid Id);
+		CompanyDescriptionPoco GetSingleCompanyDescription(string Id);
 		[OperationContract]
 		void RemoveCompanyDescription(CompanyDescriptionPoco[] item);
 		[OperationContract]
@@ -28,65 +25,65 @@ namespace CareerCloud.WCF
 		[OperationContract]
 		List<CompanyJobEducationPoco> GetAllCompanyJobEducation();
 		[OperationContract]
-		CompanyJobEducationPoco GetSingleCompanyJobEducation(Guid Id);
+		CompanyJobEducationPoco GetSingleCompanyJobEducation(string Id);
 		[OperationContract]
 		void RemoveCompanyJobEducation(CompanyJobEducationPoco[] item);
 		[OperationContract]
 		void UpdateCompanyJobEducation(CompanyJobEducationPoco[] items);
 
 		[OperationContract]
-		void AddCompanyJobSkills(CompanyJobSkillPoco[] item);
+		void AddCompanyJobSkill(CompanyJobSkillPoco[] item);
 		[OperationContract]
-		List<CompanyJobSkillPoco> GetAllCompanyJobSkills();
+		List<CompanyJobSkillPoco> GetAllCompanyJobSkill();
 		[OperationContract]
-		CompanyJobSkillPoco GetSingleCompanyJobSkills(Guid Id);
+		CompanyJobSkillPoco GetSingleCompanyJobSkill(string Id);
 		[OperationContract]
-		void RemoveCompanyJobSkills(CompanyJobSkillPoco[] item);
+		void RemoveCompanyJobSkill(CompanyJobSkillPoco[] item);
 		[OperationContract]
-		void UpdateCompanyJobSkills(CompanyJobSkillPoco[] items);
+		void UpdateCompanyJobSkill(CompanyJobSkillPoco[] items);
 
 		[OperationContract]
-		void AddCompanyJobs(CompanyJobPoco[] item);
+		void AddCompanyJob(CompanyJobPoco[] item);
 		[OperationContract]
-		List<CompanyJobPoco> GetAllCompanyJobs();
+		List<CompanyJobPoco> GetAllCompanyJob();
 		[OperationContract]
-		CompanyJobPoco GetSingleCompanyJobs(Guid Id);
+		CompanyJobPoco GetSingleCompanyJob(string Id);
 		[OperationContract]
-		void RemoveCompanyJobs(CompanyJobPoco[] item);
+		void RemoveCompanyJob(CompanyJobPoco[] item);
 		[OperationContract]
-		void UpdateCompanyJobs(CompanyJobPoco[] items);
+		void UpdateCompanyJob(CompanyJobPoco[] items);
 
 		[OperationContract]
-		void AddCompanyJobDescriptions(CompanyJobDescriptionPoco[] item);
+		void AddCompanyJobDescription(CompanyJobDescriptionPoco[] item);
 		[OperationContract]
-		List<CompanyJobDescriptionPoco> GetAllCompanyJobDescriptions();
+		List<CompanyJobDescriptionPoco> GetAllCompanyJobDescription();
 		[OperationContract]
-		CompanyJobDescriptionPoco GetSingleCompanyJobDescriptions(Guid Id);
+		CompanyJobDescriptionPoco GetSingleCompanyJobDescription(string Id);
 		[OperationContract]
-		void RemoveCompanyJobDescriptions(CompanyJobDescriptionPoco[] item);
+		void RemoveCompanyJobDescription(CompanyJobDescriptionPoco[] item);
 		[OperationContract]
-		void UpdateCompanyJobDescriptions(CompanyJobDescriptionPoco[] items);
+		void UpdateCompanyJobDescription(CompanyJobDescriptionPoco[] items);
 
 		[OperationContract]
-		void AddCompanyLocations(CompanyLocationPoco[] item);
+		void AddCompanyLocation(CompanyLocationPoco[] item);
 		[OperationContract]
-		List<CompanyLocationPoco> GetAllCompanyLocations();
+		List<CompanyLocationPoco> GetAllCompanyLocation();
 		[OperationContract]
-		CompanyLocationPoco GetSingleCompanyLocations(Guid Id);
+		CompanyLocationPoco GetSingleCompanyLocation(string Id);
 		[OperationContract]
-		void RemoveCompanyLocations(CompanyLocationPoco[] item);
+		void RemoveCompanyLocation(CompanyLocationPoco[] item);
 		[OperationContract]
-		void UpdateCompanyLocations(CompanyLocationPoco[] items);
+		void UpdateCompanyLocation(CompanyLocationPoco[] items);
 
 		[OperationContract]
-		void AddCompanyProfiles(CompanyProfilePoco[] item);
+		void AddCompanyProfile(CompanyProfilePoco[] item);
 		[OperationContract]
-		List<CompanyProfilePoco> GetAllCompanyProfiles();
+		List<CompanyProfilePoco> GetAllCompanyProfile();
 		[OperationContract]
-		CompanyProfilePoco GetSingleCompanyProfiles(Guid Id);
+		CompanyProfilePoco GetSingleCompanyProfile(string Id);
 		[OperationContract]
-		void RemoveCompanyProfiles(CompanyProfilePoco[] item);
+		void RemoveCompanyProfile(CompanyProfilePoco[] item);
 		[OperationContract]
-		void UpdateCompanyProfiles(CompanyProfilePoco[] items);
+		void UpdateCompanyProfile(CompanyProfilePoco[] item);
 	}
 }

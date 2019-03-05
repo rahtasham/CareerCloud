@@ -12,48 +12,48 @@ namespace CareerCloud.WCF
 	public interface ISecurity
 	{
 		[OperationContract]
-		void AddSecurityLogins(SecurityLoginPoco[] item);
+		void AddSecurityLogin(SecurityLoginPoco[] item);
 		[OperationContract]
-		List<SecurityLoginPoco> GetAllSecurityLogins();
+		List<SecurityLoginPoco> GetAllSecurityLogin();
 		[OperationContract]
-		SecurityLoginPoco GetSingleSecurityLogins(Guid Id);
+		SecurityLoginPoco GetSingleSecurityLogin(string Id);
 		[OperationContract]
-		void RemoveSecurityLogins(SecurityLoginPoco[] item);
+		void RemoveSecurityLogin(SecurityLoginPoco[] item);
 		[OperationContract]
-		void UpdateSecurityLogins(SecurityLoginPoco[] items);
+		void UpdateSecurityLogin(SecurityLoginPoco[] items);
 
 		[OperationContract]
 		void AddSecurityLoginsLog(SecurityLoginsLogPoco[] item);
 		[OperationContract]
 		List<SecurityLoginsLogPoco> GetAllSecurityLoginsLog();
 		[OperationContract]
-		SecurityLoginsLogPoco GetSingleSecurityLoginsLog(Guid Id);
+		SecurityLoginsLogPoco GetSingleSecurityLoginsLog(string Id);
 		[OperationContract]
 		void RemoveSecurityLoginsLog(SecurityLoginsLogPoco[] item);
 		[OperationContract]
 		void UpdateSecurityLoginsLog(SecurityLoginsLogPoco[] items);
 
 		[OperationContract]
-		void AddSecurityLoginsRoles(SecurityLoginsRolePoco[] item);
+		void AddSecurityLoginsRole(SecurityLoginsRolePoco[] item);
 		[OperationContract]
-		List<SecurityLoginsRolePoco> GetAllSecurityLoginsRoles();
+		List<SecurityLoginsRolePoco> GetAllSecurityLoginsRole();
 		[OperationContract]
-		SecurityLoginsRolePoco GetSingleSecurityLoginsRoles(Guid Id);
+		SecurityLoginsRolePoco GetSingleSecurityLoginsRole(string Id);
 		[OperationContract]
-		void RemoveSecurityLoginsRoles(SecurityLoginsRolePoco[] item);
+		void RemoveSecurityLoginsRole(SecurityLoginsRolePoco[] item);
 		[OperationContract]
-		void UpdateSecurityLoginsRoles(SecurityLoginsRolePoco[] items);
+		void UpdateSecurityLoginsRole(SecurityLoginsRolePoco[] items);
 
 		[OperationContract]
-		void AddSecurityRoles(SecurityRolePoco[] item);
+		void AddSecurityRole(SecurityRolePoco[] item);
 		[OperationContract]
-		List<SecurityRolePoco> GetAllSecurityRoles();
+		List<SecurityRolePoco> GetAllSecurityRole();
 		[OperationContract]
-		SecurityRolePoco GetSingleSecurityRoles(Guid Id);
+		SecurityRolePoco GetSingleSecurityRole(string Id);
 		[OperationContract]
-		void RemoveSecurityRoles(SecurityRolePoco[] item);
+		void RemoveSecurityRole(SecurityRolePoco[] item);
 		[OperationContract]
-		void UpdateSecurityRoles(SecurityRolePoco[] items);
+		void UpdateSecurityRole(SecurityRolePoco[] items);
 
 	}
 }

@@ -38,7 +38,7 @@ namespace CareerCloud.WCF
 			_srLogic = new SecurityRoleLogic(srRepo);
 		}
 
-		public void AddSecurityLogins(SecurityLoginPoco[] item)
+		public void AddSecurityLogin(SecurityLoginPoco[]item)
 		{
 			_slLogic.Add(item);
 		}
@@ -48,17 +48,17 @@ namespace CareerCloud.WCF
 			_sllLogic.Add(item);
 		}
 
-		public void AddSecurityLoginsRoles(SecurityLoginsRolePoco[] item)
+		public void AddSecurityLoginsRole(SecurityLoginsRolePoco[] item)
 		{
 			_slrLogic.Add(item);
 		}
 
-		public void AddSecurityRoles(SecurityRolePoco[] item)
+		public void AddSecurityRole(SecurityRolePoco[] item)
 		{
 			_srLogic.Add(item);
 		}
 
-		public List<SecurityLoginPoco> GetAllSecurityLogins()
+		public List<SecurityLoginPoco> GetAllSecurityLogin()
 		{
 			return _slLogic.GetAll();
 		}
@@ -68,37 +68,37 @@ namespace CareerCloud.WCF
 			return _sllLogic.GetAll();
 		}
 
-		public List<SecurityLoginsRolePoco> GetAllSecurityLoginsRoles()
+		public List<SecurityLoginsRolePoco> GetAllSecurityLoginsRole()
 		{
 			return _slrLogic.GetAll();
 		}
 
-		public List<SecurityRolePoco> GetAllSecurityRoles()
+		public List<SecurityRolePoco> GetAllSecurityRole()
 		{
 			return _srLogic.GetAll();
 		}
 
-		public SecurityLoginPoco GetSingleSecurityLogins(Guid Id)
+		public SecurityLoginPoco GetSingleSecurityLogin(string Id)
 		{
-			return _slLogic.Get(Id);
+			return _slLogic.Get(Guid.Parse(Id));
 		}
 
-		public SecurityLoginsLogPoco GetSingleSecurityLoginsLog(Guid Id)
+		public SecurityLoginsLogPoco GetSingleSecurityLoginsLog(string Id)
 		{
-			return _sllLogic.Get(Id);
+			return _sllLogic.Get(Guid.Parse(Id));
 		}
 
-		public SecurityLoginsRolePoco GetSingleSecurityLoginsRoles(Guid Id)
+		public SecurityLoginsRolePoco GetSingleSecurityLoginsRole(string Id)
 		{
-			return _slrLogic.Get(Id);
+			return _slrLogic.Get(Guid.Parse(Id));
 		}
 
-		public SecurityRolePoco GetSingleSecurityRoles(Guid Id)
+		public SecurityRolePoco GetSingleSecurityRole(string Id)
 		{
-			return _srLogic.Get(Id);
+			return _srLogic.Get(Guid.Parse(Id));
 		}
 
-		public void RemoveSecurityLogins(SecurityLoginPoco[] item)
+		public void RemoveSecurityLogin(SecurityLoginPoco[] item)
 		{
 			_slLogic.Delete(item);
 		}
@@ -108,17 +108,17 @@ namespace CareerCloud.WCF
 			_sllLogic.Delete(item);
 		}
 
-		public void RemoveSecurityLoginsRoles(SecurityLoginsRolePoco[] item)
+		public void RemoveSecurityLoginsRole(SecurityLoginsRolePoco[] item)
 		{
 			_slrLogic.Delete(item);
 		}
 
-		public void RemoveSecurityRoles(SecurityRolePoco[] item)
+		public void RemoveSecurityRole(SecurityRolePoco[] item)
 		{
 			_srLogic.Delete(item);
 		}
 
-		public void UpdateSecurityLogins(SecurityLoginPoco[] items)
+		public void UpdateSecurityLogin(SecurityLoginPoco[] items)
 		{
 			_slLogic.Update(items);
 		}
@@ -128,12 +128,12 @@ namespace CareerCloud.WCF
 			_sllLogic.Update(items);
 		}
 
-		public void UpdateSecurityLoginsRoles(SecurityLoginsRolePoco[] items)
+		public void UpdateSecurityLoginsRole(SecurityLoginsRolePoco[] items)
 		{
 			_slrLogic.Update(items);
 		}
 
-		public void UpdateSecurityRoles(SecurityRolePoco[] items)
+		public void UpdateSecurityRole(SecurityRolePoco[] items)
 		{
 			_srLogic.Update(items);
 		}

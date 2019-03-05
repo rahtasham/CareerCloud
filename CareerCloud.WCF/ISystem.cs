@@ -1,37 +1,36 @@
-﻿using CareerCloud.Pocos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using CareerCloud.Pocos;
 
 namespace CareerCloud.WCF
 {
 	[ServiceContract]
 	public interface ISystem
 	{
+		[OperationContract]
+		void AddSystemCountryCode(SystemCountryCodePoco[] item);
+		[OperationContract]
+		List<SystemCountryCodePoco> GetAllSystemCountryCode();
+		[OperationContract]
+		SystemCountryCodePoco GetSingleSystemCountryCode(string code);
+		[OperationContract]
+		void RemoveSystemCountryCode(SystemCountryCodePoco[] item);
+		[OperationContract]
+		void UpdateSystemCountryCode(SystemCountryCodePoco[] item);
 
 		[OperationContract]
-		void AddSystemCountryCodes(SystemCountryCodePoco[] item);
+		void AddSystemLanguageCode(SystemLanguageCodePoco[] item);
 		[OperationContract]
-		List<SystemCountryCodePoco> GetAllSystemCountryCodes();
+		List<SystemLanguageCodePoco> GetAllSystemLanguageCode();
 		[OperationContract]
-		SystemCountryCodePoco GetSingleSystemCountryCodes(String Code);
+		SystemLanguageCodePoco GetSingleSystemLanguageCode(string code);
 		[OperationContract]
-		void RemoveSystemCountryCodes(SystemCountryCodePoco[] item);
+		void RemoveSystemLanguageCode(SystemLanguageCodePoco[] item);
 		[OperationContract]
-		void UpdateSystemCountryCodes(SystemCountryCodePoco[] items);
-
-		[OperationContract]
-		void AddSystemLanguageCodes(SystemLanguageCodePoco[] item);
-		[OperationContract]
-		List<SystemLanguageCodePoco> GetAllSystemLanguageCodes();
-		[OperationContract]
-		SystemLanguageCodePoco GetSingleSystemLanguageCodes(String Code);
-		[OperationContract]
-		void RemoveSystemLanguageCodes(SystemLanguageCodePoco[] item);
-		[OperationContract]
-		void UpdateSytemLanguageCodes(SystemLanguageCodePoco[] items);
+		void UpdateSystemLanguageCode(SystemLanguageCodePoco[] item);
 	}
 }
