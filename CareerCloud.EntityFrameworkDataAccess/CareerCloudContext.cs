@@ -18,7 +18,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
 			base(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString)
 		{
 			Database.Log = l => System.Diagnostics.Debug.WriteLine(l);
-			Configuration.ProxyCreationEnabled = false;
+			//Configuration.ProxyCreationEnabled = false;
 			Configuration.ProxyCreationEnabled = createProxy;
 		}
 
