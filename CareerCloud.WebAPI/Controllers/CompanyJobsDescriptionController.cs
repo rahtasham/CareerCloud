@@ -12,27 +12,27 @@ using System.Web.Http.Description;
 namespace CareerCloud.WebAPI.Controllers
 {
 	[RoutePrefix("api/careercloud/company/v1")]
-	public class CompanyJobSkillsController : ApiController
+	public class CompanyJobsDescriptionController : ApiController
     {
-		private CompanyJobSkillLogic _logic;
+		private CompanyJobDescriptionLogic _logic;
 
-		public CompanyJobSkillsController()
+		public CompanyJobsDescriptionController()
 		{
-			EFGenericRepository<CompanyJobSkillPoco> repo =
-				new EFGenericRepository<CompanyJobSkillPoco>(false);
+			EFGenericRepository<CompanyJobDescriptionPoco> repo =
+				new EFGenericRepository<CompanyJobDescriptionPoco>(false);
 
-			_logic = new CompanyJobSkillLogic(repo);
+			_logic = new CompanyJobDescriptionLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("jobSkill/{companyJobSkillId}")]
-		[ResponseType(typeof(CompanyJobSkillPoco))]
+		[Route("jobDescription/{companyJobDescriptionId}")]
+		[ResponseType(typeof(CompanyJobDescriptionPoco))]
 
-		public IHttpActionResult GetCompanyJobSkill(Guid companyJobSkillId)
+		public IHttpActionResult GetCompanyJobsDescription(Guid companyJobDescriptionId)
 		{
 			try
 			{
-				CompanyJobSkillPoco poco = _logic.Get(companyJobSkillId);
+				CompanyJobDescriptionPoco poco = _logic.Get(companyJobDescriptionId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("jobSkill")]
-		[ResponseType(typeof(List<CompanyJobSkillPoco>))]
-		public IHttpActionResult GetAllCompanyJobSkill()
+		[Route("jobDescription")]
+		[ResponseType(typeof(List<CompanyJobDescriptionPoco>))]
+		public IHttpActionResult GetAllCompanyJobDescription()
 		{
 			try
 			{
-				List<CompanyJobSkillPoco> pocos = _logic.GetAll();
+				List<CompanyJobDescriptionPoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("jobSkill")]
-		public IHttpActionResult PostCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
+		[Route("jobDescription")]
+		public IHttpActionResult PostCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("jobSkill")]
-		public IHttpActionResult PutCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
+		[Route("jobDescription")]
+		public IHttpActionResult PutCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("jobSkill")]
-		public IHttpActionResult DeleteCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
+		[Route("jobDescription")]
+		public IHttpActionResult DeleteCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
 		{
 			try
 			{

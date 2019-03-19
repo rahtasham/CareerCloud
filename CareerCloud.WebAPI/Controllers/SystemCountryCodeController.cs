@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/company/v1")]
-	public class CompanyDescriptionsController : ApiController
+	[RoutePrefix("api/careercloud/system/v1")]
+	public class SystemCountryCodeController : ApiController
     {
-		private CompanyDescriptionLogic _logic;
+		private SystemCountryCodeLogic _logic;
 
-		public CompanyDescriptionsController()
+		public SystemCountryCodeController()
 		{
-			EFGenericRepository<CompanyDescriptionPoco> repo =
-				new EFGenericRepository<CompanyDescriptionPoco>(false);
+			EFGenericRepository<SystemCountryCodePoco> repo =
+				new EFGenericRepository<SystemCountryCodePoco>(false);
 
-			_logic = new CompanyDescriptionLogic(repo);
+			_logic = new SystemCountryCodeLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("description/{companyDescriptionId}")]
-		[ResponseType(typeof(CompanyDescriptionPoco))]
+		[Route("countryCode/{systemCountryCodeCode}")]
+		[ResponseType(typeof(SystemCountryCodePoco))]
 
-		public IHttpActionResult GetCompanyDescription(Guid companyDescriptionId)
+		public IHttpActionResult GetSystemCountryCode(string SystemCountryCodeCode)
 		{
 			try
 			{
-				CompanyDescriptionPoco poco = _logic.Get(companyDescriptionId);
+				SystemCountryCodePoco poco = _logic.Get(SystemCountryCodeCode);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("description")]
-		[ResponseType(typeof(List<CompanyDescriptionPoco>))]
-		public IHttpActionResult GetAllCompanyDescription()
+		[Route("countryCode")]
+		[ResponseType(typeof(List<SystemCountryCodePoco>))]
+		public IHttpActionResult GetAllSystemCountryCode()
 		{
 			try
 			{
-				List<CompanyDescriptionPoco> pocos = _logic.GetAll();
+				List<SystemCountryCodePoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("description")]
-		public IHttpActionResult PostCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
+		[Route("countryCode")]
+		public IHttpActionResult PostSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("description")]
-		public IHttpActionResult PutCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
+		[Route("countryCode")]
+		public IHttpActionResult PutSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("description")]
-		public IHttpActionResult DeleteCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
+		[Route("countryCode")]
+		public IHttpActionResult DeleteSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
 		{
 			try
 			{

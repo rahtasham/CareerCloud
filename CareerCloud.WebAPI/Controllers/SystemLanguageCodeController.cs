@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/security/v1")]
-	public class SecurityLoginsRolesController : ApiController
+	[RoutePrefix("api/careercloud/system/v1")]
+	public class SystemLanguageCodeController : ApiController
     {
-		private SecurityLoginsRoleLogic _logic;
+		private SystemLanguageCodeLogic _logic;
 
-		public SecurityLoginsRolesController()
+		public SystemLanguageCodeController()
 		{
-			EFGenericRepository<SecurityLoginsRolePoco> repo =
-				new EFGenericRepository<SecurityLoginsRolePoco>(false);
+			EFGenericRepository<SystemLanguageCodePoco> repo =
+				new EFGenericRepository<SystemLanguageCodePoco>(false);
 
-			_logic = new SecurityLoginsRoleLogic(repo);
+			_logic = new SystemLanguageCodeLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("loginsRole/{securityLoginsRoleId}")]
-		[ResponseType(typeof(SecurityLoginsRolePoco))]
+		[Route("languageCode/{systemLanguageCodeLanguageId}")]
+		[ResponseType(typeof(SystemLanguageCodePoco))]
 
-		public IHttpActionResult GetSecurityLoginsRole(Guid securityLoginsRoleId)
+		public IHttpActionResult GetSystemLanguageCode(string systemLanguageCodeLanguageId)
 		{
 			try
 			{
-				SecurityLoginsRolePoco poco = _logic.Get(securityLoginsRoleId);
+				SystemLanguageCodePoco poco = _logic.Get(systemLanguageCodeLanguageId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("loginsRole")]
-		[ResponseType(typeof(List<SecurityLoginsRolePoco>))]
-		public IHttpActionResult GetAllSecurityLoginsRole()
+		[Route("languageCode")]
+		[ResponseType(typeof(List<SystemLanguageCodePoco>))]
+		public IHttpActionResult GetAllSystemLanguageCode()
 		{
 			try
 			{
-				List<SecurityLoginsRolePoco> pocos = _logic.GetAll();
+				List<SystemLanguageCodePoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("loginsRole")]
-		public IHttpActionResult PostSecurityLoginsRole([FromBody] SecurityLoginsRolePoco[] pocos)
+		[Route("languageCode")]
+		public IHttpActionResult PostSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("loginsRole")]
-		public IHttpActionResult PutSecurityLoginsRole([FromBody] SecurityLoginsRolePoco[] pocos)
+		[Route("languageCode")]
+		public IHttpActionResult PutSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("loginsRole")]
-		public IHttpActionResult DeleteSecurityLoginsRole([FromBody] SecurityLoginsRolePoco[] pocos)
+		[Route("languageCode")]
+		public IHttpActionResult DeleteSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
 		{
 			try
 			{

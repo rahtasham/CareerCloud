@@ -12,11 +12,11 @@ using System.Web.Http.Description;
 namespace CareerCloud.WebAPI.Controllers
 {
 	[RoutePrefix("api/careercloud/applicant/v1")]
-	public class ApplicantResumesController : ApiController
+	public class ApplicantResumeController : ApiController
     {
 		private ApplicantResumeLogic _logic;
 
-		public ApplicantResumesController()
+		public ApplicantResumeController()
 		{
 			EFGenericRepository<ApplicantResumePoco> repo =
 				new EFGenericRepository<ApplicantResumePoco>(false);
@@ -69,7 +69,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpPost]
 		[Route("resume")]
-		public IHttpActionResult PostApplicantResumes([FromBody] ApplicantResumePoco[] pocos)
+		public IHttpActionResult PostApplicantResume([FromBody] ApplicantResumePoco[] pocos)
 		{
 			try
 			{
@@ -85,7 +85,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpPut]
 		[Route("resume")]
-		public IHttpActionResult PutApplicantResumes([FromBody] ApplicantResumePoco[] pocos)
+		public IHttpActionResult PutApplicantResume([FromBody] ApplicantResumePoco[] pocos)
 		{
 			try
 			{
@@ -101,7 +101,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpDelete]
 		[Route("resume")]
-		public IHttpActionResult DeleteApplicantResumes([FromBody] ApplicantResumePoco[] pocos)
+		public IHttpActionResult DeleteApplicantResume([FromBody] ApplicantResumePoco[] pocos)
 		{
 			try
 			{

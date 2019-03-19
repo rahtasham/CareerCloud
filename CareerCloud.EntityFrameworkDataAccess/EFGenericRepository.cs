@@ -34,9 +34,16 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
 		public IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
 		{
-			
-			throw new NotImplementedException();
+			IQueryable<T> query = _context.Set<T>();
+			foreach (Expression<Func<T, object>> navProp in navigationProperties)
+			{
+				query = query.Include<T, object>(navProp);
+			}
+			return query.ToList<T>();
+
+
 		}
+
 
 		public IList<T> GetList(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties)
 		{

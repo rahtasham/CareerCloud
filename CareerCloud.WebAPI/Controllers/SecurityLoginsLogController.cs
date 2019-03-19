@@ -28,7 +28,7 @@ namespace CareerCloud.WebAPI.Controllers
 		[Route("loginsLog/{securityLoginsLogId}")]
 		[ResponseType(typeof(SecurityLoginsLogPoco))]
 
-		public IHttpActionResult GetSecurityLoginsLog(Guid securityLoginsLogId)
+		public IHttpActionResult GetSecurityLoginLog(Guid securityLoginsLogId)
 		{
 			try
 			{
@@ -69,7 +69,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpPost]
 		[Route("loginsLog")]
-		public IHttpActionResult PostSecurityLoginsLog([FromBody] SecurityLoginsLogPoco[] pocos)
+		public IHttpActionResult PostSecurityLoginLog([FromBody] SecurityLoginsLogPoco[] pocos)
 		{
 			try
 			{
@@ -85,7 +85,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpPut]
 		[Route("loginsLog")]
-		public IHttpActionResult PutSecurityLoginsLog([FromBody] SecurityLoginsLogPoco[] pocos)
+		public IHttpActionResult PutSecurityLoginLog([FromBody] SecurityLoginsLogPoco[] pocos)
 		{
 			try
 			{
@@ -101,7 +101,7 @@ namespace CareerCloud.WebAPI.Controllers
 
 		[HttpDelete]
 		[Route("loginsLog")]
-		public IHttpActionResult DeleteSecurityLoginsLog([FromBody] SecurityLoginsLogPoco[] pocos)
+		public IHttpActionResult DeleteSecurityLoginLog([FromBody] SecurityLoginsLogPoco[] pocos)
 		{
 			try
 			{

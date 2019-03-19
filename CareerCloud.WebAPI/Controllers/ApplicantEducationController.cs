@@ -28,7 +28,7 @@ namespace CareerCloud.WebAPI.Controllers
 		[Route("education/{applicantEducationId}")]
 		[ResponseType(typeof(ApplicantEducationPoco))]
 
-		public IHttpActionResult GetApplicationEducation(Guid applicantEducationId)
+		public IHttpActionResult GetApplicantEducation(Guid applicantEducationId)
 		{
 			try
 			{

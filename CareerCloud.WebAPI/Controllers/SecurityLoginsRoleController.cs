@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/company/v1")]
-	public class CompanyJobsController : ApiController
+	[RoutePrefix("api/careercloud/security/v1")]
+	public class SecurityLoginsRoleController : ApiController
     {
-		private CompanyJobLogic _logic;
+		private SecurityLoginsRoleLogic _logic;
 
-		public CompanyJobsController()
+		public SecurityLoginsRoleController()
 		{
-			EFGenericRepository<CompanyJobPoco> repo =
-				new EFGenericRepository<CompanyJobPoco>(false);
+			EFGenericRepository<SecurityLoginsRolePoco> repo =
+				new EFGenericRepository<SecurityLoginsRolePoco>(false);
 
-			_logic = new CompanyJobLogic(repo);
+			_logic = new SecurityLoginsRoleLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("job/{companyJobId}")]
-		[ResponseType(typeof(CompanyJobPoco))]
+		[Route("loginsRole/{securityLoginsRoleId}")]
+		[ResponseType(typeof(SecurityLoginsRolePoco))]
 
-		public IHttpActionResult GetCompanyJob(Guid companyJobId)
+		public IHttpActionResult GetSecurityLoginsRole(Guid securityLoginsRoleId)
 		{
 			try
 			{
-				CompanyJobPoco poco = _logic.Get(companyJobId);
+				SecurityLoginsRolePoco poco = _logic.Get(securityLoginsRoleId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("job")]
-		[ResponseType(typeof(List<CompanyJobPoco>))]
-		public IHttpActionResult GetAllCompanyJob()
+		[Route("loginsRole")]
+		[ResponseType(typeof(List<SecurityLoginsRolePoco>))]
+		public IHttpActionResult GetAllSecurityLoginsRole()
 		{
 			try
 			{
-				List<CompanyJobPoco> pocos = _logic.GetAll();
+				List<SecurityLoginsRolePoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("job")]
-		public IHttpActionResult PostCompanyJob([FromBody] CompanyJobPoco[] pocos)
+		[Route("loginsRole")]
+		public IHttpActionResult PostSecurityLoginRole([FromBody] SecurityLoginsRolePoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("job")]
-		public IHttpActionResult PutCompanyJob([FromBody] CompanyJobPoco[] pocos)
+		[Route("loginsRole")]
+		public IHttpActionResult PutSecurityLoginsRole([FromBody] SecurityLoginsRolePoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("job")]
-		public IHttpActionResult DeleteCompanyJob([FromBody] CompanyJobPoco[] pocos)
+		[Route("loginsRole")]
+		public IHttpActionResult DeleteSecurityLoginRole([FromBody] SecurityLoginsRolePoco[] pocos)
 		{
 			try
 			{

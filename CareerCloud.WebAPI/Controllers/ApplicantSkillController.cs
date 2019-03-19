@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/system/v1")]
-	public class SystemCountryCodesController : ApiController
+	[RoutePrefix("api/careercloud/applicant/v1")]
+	public class ApplicantSkillController : ApiController
     {
-		private SystemCountryCodeLogic _logic;
+		private ApplicantSkillLogic _logic;
 
-		public SystemCountryCodesController()
+		public ApplicantSkillController()
 		{
-			EFGenericRepository<SystemCountryCodePoco> repo =
-				new EFGenericRepository<SystemCountryCodePoco>(false);
+			EFGenericRepository<ApplicantSkillPoco> repo =
+				new EFGenericRepository<ApplicantSkillPoco>(false);
 
-			_logic = new SystemCountryCodeLogic(repo);
+			_logic = new ApplicantSkillLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("countryCode/{systemCountryCodeCode}")]
-		[ResponseType(typeof(SystemCountryCodePoco))]
+		[Route("skill/{applicantSkillId}")]
+		[ResponseType(typeof(ApplicantSkillPoco))]
 
-		public IHttpActionResult GetSystemCountryCode(string SystemCountryCodeCode)
+		public IHttpActionResult GetApplicantSkill(Guid applicantSkillId)
 		{
 			try
 			{
-				SystemCountryCodePoco poco = _logic.Get(SystemCountryCodeCode);
+				ApplicantSkillPoco poco = _logic.Get(applicantSkillId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("countryCode")]
-		[ResponseType(typeof(List<SystemCountryCodePoco>))]
-		public IHttpActionResult GetAllSystemCountryCode()
+		[Route("skill")]
+		[ResponseType(typeof(List<ApplicantSkillPoco>))]
+		public IHttpActionResult GetAllApplicantSkill()
 		{
 			try
 			{
-				List<SystemCountryCodePoco> pocos = _logic.GetAll();
+				List<ApplicantSkillPoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("countryCode")]
-		public IHttpActionResult PostSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
+		[Route("skill")]
+		public IHttpActionResult PostApplicantSkill([FromBody] ApplicantSkillPoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("countryCode")]
-		public IHttpActionResult PutSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
+		[Route("skill")]
+		public IHttpActionResult PutApplicantSkill([FromBody] ApplicantSkillPoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("countryCode")]
-		public IHttpActionResult DeleteSystemCountryCode([FromBody] SystemCountryCodePoco[] pocos)
+		[Route("skill")]
+		public IHttpActionResult DeleteApplicantSkill([FromBody] ApplicantSkillPoco[] pocos)
 		{
 			try
 			{

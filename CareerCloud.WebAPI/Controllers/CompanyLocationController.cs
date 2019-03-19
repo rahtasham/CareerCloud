@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/security/v1")]
-	public class SecurityRolesController : ApiController
+	[RoutePrefix("api/careercloud/company/v1")]
+	public class CompanyLocationController : ApiController
     {
-		private SecurityRoleLogic _logic;
+		private CompanyLocationLogic _logic;
 
-		public SecurityRolesController()
+		public CompanyLocationController()
 		{
-			EFGenericRepository<SecurityRolePoco> repo =
-				new EFGenericRepository<SecurityRolePoco>(false);
+			EFGenericRepository<CompanyLocationPoco> repo =
+				new EFGenericRepository<CompanyLocationPoco>(false);
 
-			_logic = new SecurityRoleLogic(repo);
+			_logic = new CompanyLocationLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("role/{securityRoleId}")]
-		[ResponseType(typeof(SecurityRolePoco))]
+		[Route("location/{companyLocationId}")]
+		[ResponseType(typeof(CompanyLocationPoco))]
 
-		public IHttpActionResult GetSecurityRole(Guid securityRoleId)
+		public IHttpActionResult GetCompanyLocation(Guid companyLocationId)
 		{
 			try
 			{
-				SecurityRolePoco poco = _logic.Get(securityRoleId);
+				CompanyLocationPoco poco = _logic.Get(companyLocationId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("role")]
-		[ResponseType(typeof(List<SecurityRolePoco>))]
-		public IHttpActionResult GetAllSecurityRole()
+		[Route("location")]
+		[ResponseType(typeof(List<CompanyLocationPoco>))]
+		public IHttpActionResult GetAllCompanyLocation()
 		{
 			try
 			{
-				List<SecurityRolePoco> pocos = _logic.GetAll();
+				List<CompanyLocationPoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("role")]
-		public IHttpActionResult PostSecurityRole([FromBody] SecurityRolePoco[] pocos)
+		[Route("location")]
+		public IHttpActionResult PostCompanyLocation([FromBody] CompanyLocationPoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("role")]
-		public IHttpActionResult PutSecurityRole([FromBody] SecurityRolePoco[] pocos)
+		[Route("location")]
+		public IHttpActionResult PutCompanyLocation([FromBody] CompanyLocationPoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("role")]
-		public IHttpActionResult DeleteSecurityRole([FromBody] SecurityRolePoco[] pocos)
+		[Route("location")]
+		public IHttpActionResult DeleteCompanyLocation([FromBody] CompanyLocationPoco[] pocos)
 		{
 			try
 			{

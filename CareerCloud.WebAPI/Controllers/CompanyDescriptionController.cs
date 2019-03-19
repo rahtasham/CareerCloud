@@ -11,28 +11,28 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-	[RoutePrefix("api/careercloud/system/v1")]
-	public class SystemLanguageCodesController : ApiController
+	[RoutePrefix("api/careercloud/company/v1")]
+	public class CompanyDescriptionController : ApiController
     {
-		private SystemLanguageCodeLogic _logic;
+		private CompanyDescriptionLogic _logic;
 
-		public SystemLanguageCodesController()
+		public CompanyDescriptionController()
 		{
-			EFGenericRepository<SystemLanguageCodePoco> repo =
-				new EFGenericRepository<SystemLanguageCodePoco>(false);
+			EFGenericRepository<CompanyDescriptionPoco> repo =
+				new EFGenericRepository<CompanyDescriptionPoco>(false);
 
-			_logic = new SystemLanguageCodeLogic(repo);
+			_logic = new CompanyDescriptionLogic(repo);
 		}
 
 		[HttpGet]
-		[Route("languageCode/{systemLanguageCodeLanguageId}")]
-		[ResponseType(typeof(SystemLanguageCodePoco))]
+		[Route("description/{companyDescriptionId}")]
+		[ResponseType(typeof(CompanyDescriptionPoco))]
 
-		public IHttpActionResult GetSystemLanguageCode(string systemLanguageCodeLanguageId)
+		public IHttpActionResult GetCompanyDescription(Guid companyDescriptionId)
 		{
 			try
 			{
-				SystemLanguageCodePoco poco = _logic.Get(systemLanguageCodeLanguageId);
+				CompanyDescriptionPoco poco = _logic.Get(companyDescriptionId);
 				if (poco == null)
 				{
 					return NotFound();
@@ -47,13 +47,13 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("languageCode")]
-		[ResponseType(typeof(List<SystemLanguageCodePoco>))]
-		public IHttpActionResult GetAllSystemLanguageCode()
+		[Route("description")]
+		[ResponseType(typeof(List<CompanyDescriptionPoco>))]
+		public IHttpActionResult GetAllCompanyDescription()
 		{
 			try
 			{
-				List<SystemLanguageCodePoco> pocos = _logic.GetAll();
+				List<CompanyDescriptionPoco> pocos = _logic.GetAll();
 				if (pocos == null)
 				{
 					return NotFound();
@@ -68,8 +68,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("languageCode")]
-		public IHttpActionResult PostSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
+		[Route("description")]
+		public IHttpActionResult PostCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
 		{
 			try
 			{
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		[Route("languageCode")]
-		public IHttpActionResult PutSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
+		[Route("description")]
+		public IHttpActionResult PutCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
 		{
 			try
 			{
@@ -100,8 +100,8 @@ namespace CareerCloud.WebAPI.Controllers
 		}
 
 		[HttpDelete]
-		[Route("languageCode")]
-		public IHttpActionResult DeleteSystemLanguageCode([FromBody] SystemLanguageCodePoco[] pocos)
+		[Route("description")]
+		public IHttpActionResult DeleteCompanyDescription([FromBody] CompanyDescriptionPoco[] pocos)
 		{
 			try
 			{
